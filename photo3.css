@@ -1,0 +1,40 @@
+/* 일회용 카메라(실사 사진 베이스) */
+/* ── 일회용(직접 렌더한 이미지): 부품 좌표는 이미지(852×393)와 1:1 ── */
+.film.sk-pfun2 .eye{left:302px!important;top:156px!important}
+.film.sk-pfun2 .vfwin{height:80px!important;border-radius:6px}
+.film.sk-pfun2 .cnt{left:35px;top:79px!important;width:78px;height:78px;border-radius:50%;background:#efeadb;box-shadow:inset 0 3px 6px rgba(0,0,0,.45)}
+.film.sk-pfun2 .cnt b{font-size:26px}
+.film.sk-pfun2 .wslot{display:block;left:658px;right:auto;top:62px;width:120px;height:86px;background:none!important;box-shadow:none!important}
+.film.sk-pfun2 .rw{display:block;left:0;right:0;top:0;bottom:0;border-radius:6px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 1px,rgba(0,0,0,.35) 1px 4px)!important;background-position-x:calc(var(--rp,0)*1px)!important;box-shadow:none;cursor:ew-resize}
+.film.sk-pfun2 .rw::after{display:none}
+.film.sk-pfun2 .wst{left:0;top:auto;bottom:-18px;font-size:9px;color:#efeadb;text-shadow:0 1px 1px #000}
+.film.sk-pfun2 .fshut{left:514px;right:auto;top:4px;width:72px;height:60px;border-radius:50%;padding:0;background:radial-gradient(circle at 36% 28%,#626260,#1a1a19 55%,#000);box-shadow:0 0 0 2px #000,0 0 0 4px #86857f,0 4px 6px rgba(0,0,0,.6)}
+.film.sk-pfun2 .fshut.armed{box-shadow:0 0 0 2px #000,0 0 0 4px #3ddc6a,0 0 14px 7px rgba(61,220,106,.6),0 4px 6px rgba(0,0,0,.6)}
+.film.sk-pfun2 .memo{left:147px!important;top:263px!important;right:auto!important;transform:scale(.79)!important;transform-origin:0 0;padding:0;margin:0!important}
+.film.sk-pfun2 .mwin{box-shadow:0 2px 5px rgba(0,0,0,.45)}
+.film.sk-pfun2 .screw{left:790px;right:auto;top:342px;bottom:auto;width:36px;height:36px}
+.film.sk-pfun2 .screw svg{width:19px;height:19px}
+
+/* 터치 영역을 가리는 장식 요소가 없도록 */
+.film.sk-pslr .wslot::after,.film.sk-pfun2 .wslot::after{display:none!important}
+
+.film.sk-pfun2 .cambody{background-image:url(skins/fun_real.webp)!important;background-size:100% 100%}
+.film.sk-pfun2 .shell{background:#161615!important}
+.film.sk-pfun2 .eye{left:434px!important;top:80px!important}
+.film.sk-pfun2 .vfwin{height:34px!important;aspect-ratio:75/34!important;border-radius:3px}
+.film.sk-pfun2 .vfframe{inset:3px}
+.film.sk-pfun2 .cnt{left:40px;top:150px!important;width:62px;height:62px}
+.film.sk-pfun2 .cnt b{font-size:22px}
+.film.sk-pfun2 .wslot{left:712px;top:46px;width:128px;height:54px}
+.film.sk-pfun2 .fshut{left:690px;top:112px;width:52px;height:52px}
+.film.sk-pfun2 .memo{left:150px!important;top:288px!important;transform:scale(.7)!important;transform-origin:0 0}
+.film.sk-pfun2 .screw{left:792px;top:342px}
+.film.sk-pfun2 .shell::before,.film.sk-pfun2 .shell::after{display:none}
+.film.sk-pfun2 .cambody{position:absolute;inset:auto;left:0;top:0;width:852px;height:393px;box-shadow:none!important;border-radius:0;filter:none!important;background-repeat:no-repeat}
+.film.sk-pfun2 .cambody::before,.film.sk-pfun2 .cambody::after,.film.sk-pfun2 .plate2::before,.film.sk-pfun2 .plate2::after{display:none!important}
+.film.sk-pfun2 .plate2{inset:0;top:0;height:100%!important;background:none!important;border:0;box-shadow:none!important;border-radius:0}
+.film.sk-pfun2 .pt,.film.sk-pfun2 .onsw,.film.sk-pfun2 .deco{display:none!important}
+.film.sk-pfun2 .eye{padding:0!important;background:none!important;box-shadow:none!important;border-radius:3px;transform:none!important}
+.film.sk-pfun2 .vfwin{box-shadow:inset 0 0 8px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.6)}
+.film.sk-pfun2 .vfwin::after{background:linear-gradient(125deg,rgba(255,255,255,.22),transparent 40%),radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45))}
+.film.sk-pfun2 .wslot{display:block!important}

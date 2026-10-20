@@ -1,0 +1,4 @@
+const C='still-v14',F=['./','index.html','digital/index.html','app.js','film.css','skins.css','bodies.css','photo.css','realskins.css','photo2.css','photo3.css','photo4.css','skins/pzbr.jpg','skins/fun3.jpg','manifest.json','digital/manifest.json','icons/film-180.png','icons/film-192.png','icons/film-512.png','icons/digital-180.png','icons/digital-192.png','icons/digital-512.png'];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F)).then(()=>self.skipWaiting()))});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request,{cache:'no-store'}).then(r=>{const cp=r.clone();caches.open(C).then(c=>c.put(e.request,cp));return r}).catch(()=>caches.match(e.request)))});

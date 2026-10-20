@@ -1,0 +1,297 @@
+/* ═══════ 카메라 스킨 (film.css 뒤에 로드) — 클래식 암 레버 + 스킨별 외관 ═══════ */
+
+/* 공통: 윗판 위 와인딩 레버 (일회용 제외) — 뒤에서 비스듬히 본 수평 회전 */
+.wslot{display:none}
+.film.sk-kodak .wslot{display:block}
+.film:not(.sk-kodak) .onsw{display:none}
+.film:not(.sk-kodak) .fshut{margin-top:auto}
+.lvz{display:block;position:absolute;z-index:4;left:52%;top:calc(var(--sf) + 100px);width:48%;height:142px;margin:0;
+  --px:72%;--py:96px;--L:70px;--sc:.55;--k:calc(var(--L) / 110);touch-action:none;
+  --ar1:#f7f5ee;--ar2:#b7b3a9;--ar3:#7a766d;--pd1:#5a5a56;--pd2:#222221;--pd3:#070707;--tb1:#7a7a75;--tb2:#2e2e2c;--rg:rgba(255,255,255,.14)}
+.film.sk-kodak .lvz{display:none}
+/* 윗판에 새겨진 궤적(납작한 타원 호) */
+.lvz .groove{position:absolute;left:calc(var(--px) - var(--L));top:calc(var(--py) - var(--L)*var(--sc));width:calc(var(--L)*2);height:calc(var(--L)*2*var(--sc));box-sizing:border-box;border-radius:50%;
+  border:2px dotted var(--rg);clip-path:inset(0 0 50% 0);pointer-events:none}
+.lvz .armw{position:absolute;inset:0;pointer-events:none;z-index:2;filter:drop-shadow(2px 5px 3px rgba(0,0,0,.55))}
+.lvz .armp{position:absolute;inset:0;transform:scaleY(var(--sc));transform-origin:var(--px) var(--py)}
+.lvz .arm{position:absolute;left:calc(var(--px) - var(--k)*24);top:calc(var(--py) - var(--k)*24);width:calc(var(--k)*140);height:calc(var(--k)*48);
+  transform-origin:calc(var(--k)*24) calc(var(--k)*24);transform:rotate(180deg)}
+.lvz .arm svg{display:block;width:100%;height:100%;overflow:visible}
+.lvz .pivot{position:absolute;left:var(--px);top:var(--py);width:calc(var(--k)*58);height:calc(var(--k)*58);margin-left:calc(var(--k)*-29);margin-top:calc(var(--k)*-29);z-index:3;
+  filter:drop-shadow(1px 3px 2px rgba(0,0,0,.6));transform:scaleY(.8)}
+.lvz .pivot svg{display:block;width:100%;height:100%}
+.lvz .wst{position:absolute;left:0;right:0;bottom:2px;text-align:center;font:700 9px var(--mono);letter-spacing:.18em;color:#6d6a60}
+.lvz .wst[data-s=ok]{color:#2f9a4c}.lvz .wst[data-s=end]{color:#b87400}
+.lvz.wig{animation:wig .45s}
+
+/* ───────── 1. 크롬 레인지파인더 (은색 윗판 · 가죽 · 필름 메모 다이얼) ───────── */
+.film.sk-chrome .shell{background:
+  radial-gradient(circle at 20% 30%,rgba(255,255,255,.07) 0 1.2px,transparent 1.7px) 0 0/7px 7px,
+  radial-gradient(circle at 70% 60%,rgba(0,0,0,.55) 0 1.5px,transparent 1.9px) 3px 2px/7px 6px,
+  radial-gradient(circle at 45% 85%,rgba(255,255,255,.045) 0 1px,transparent 1.5px) 1px 3px/5px 5px,#121211}
+.film.sk-chrome .plate2{height:calc(var(--sf) + 252px);border-radius:0 0 26px 26px;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.18) 0 1px,transparent 1px 3px),linear-gradient(#fbfbf8,#d4d4cf 38%,#a8a8a2 39%,#ececE7 68%,#b4b4ae);
+  border-bottom:3px solid #101010;box-shadow:0 7px 0 #7e7e78,0 9px 14px rgba(0,0,0,.7),inset 0 -2px 0 rgba(255,255,255,.6)}
+.film.sk-chrome .pt{font:italic 700 17px "Segoe Script","Brush Script MT",cursive;letter-spacing:.02em;text-indent:0;color:#5c5c56;top:calc(var(--sf) + 8px)}
+.film.sk-chrome .cnt{width:70px;height:70px;border-radius:50%;top:calc(var(--sf) + 68px);
+  background:radial-gradient(circle,#f8f8f4 0 53%,transparent 54%),repeating-conic-gradient(#dcdcd6 0 6deg,#86867f 6deg 12deg);box-shadow:0 0 0 2px #151515,0 3px 6px rgba(0,0,0,.5)}
+.film.sk-chrome .cnt small{display:none}
+.film.sk-chrome .cnt b{color:#111;text-shadow:none;font-size:24px}
+.film.sk-chrome .cnt b.low{color:#c4281c;text-shadow:none}
+.film.sk-chrome .onsw{width:58px;height:58px;border-radius:50%;top:calc(var(--sf) + 74px);background:repeating-conic-gradient(#e4e4de 0 7deg,#7a7a74 7deg 14deg);box-shadow:0 0 0 2px #151515,0 3px 6px rgba(0,0,0,.5)}
+.film.sk-chrome .onsw i,.film.sk-chrome .onsw small{display:none}
+.film.sk-chrome .eye{background:#0a0a0a;border-radius:20px;padding:9px;box-shadow:0 0 0 6px #d9d9d3,0 0 0 8px #101010,0 8px 14px rgba(0,0,0,.6)}
+.film.sk-chrome .memo,.film.sk-black .memo{padding:0;background:none;box-shadow:none;margin-top:34px}
+.film.sk-chrome .mwin,.film.sk-black .mwin{width:150px;height:150px;border-radius:50%;border:0;box-shadow:0 0 0 7px #d6d6d0,0 0 0 9px #101010,0 6px 12px rgba(0,0,0,.65);
+  background:radial-gradient(circle,#f5f2ea 0 44%,transparent 45%),repeating-conic-gradient(#e0e0da 0 4deg,#8c8c86 4deg 8deg)}
+.film.sk-chrome .mwin::after,.film.sk-black .mwin::after{display:none}
+.film.sk-chrome .lbl,.film.sk-black .lbl{background:none;padding:0}
+.film.sk-chrome .lt,.film.sk-chrome .lb,.film.sk-black .lt,.film.sk-black .lb{display:none}
+.film.sk-chrome .lm,.film.sk-black .lm{position:absolute;inset:0;display:block}
+.film.sk-chrome .lm i,.film.sk-black .lm i{position:absolute;left:0;right:0;top:50%;transform:translateY(-52%);text-align:center;font-size:36px;color:#111}
+.film.sk-chrome .lm b,.film.sk-black .lm b{position:absolute;left:0;right:0;top:35px;text-align:center;font-size:9px;letter-spacing:.14em;color:#b3271b}
+.film.sk-chrome .lm i::after,.film.sk-black .lm i::after{content:"ASA";position:absolute;left:0;right:0;top:100%;font:800 8px var(--mono);letter-spacing:.2em;color:#555}
+.film.sk-chrome .fshut{background:repeating-conic-gradient(#e8e8e2 0 4deg,#8f8f89 4deg 8deg)}
+.film.sk-chrome .fshut b{background:radial-gradient(circle at 38% 30%,#fff,#cfcfc9 48%,#7b7b75);box-shadow:inset 0 -5px 9px rgba(0,0,0,.3),inset 0 2px 3px #fff}
+.film.sk-chrome .lvz{--pd1:#555552;--pd2:#222221;--pd3:#060606}
+.film.sk-chrome .wst,.film.sk-chrome .lvz .wst{color:#8d8a84}
+
+/* ───────── 2. 블랙 레인지파인더 (검정 래커 윗판 · 도마뱀 가죽) ───────── */
+.film.sk-black .shell{background:
+  radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.1) 0 36%,rgba(0,0,0,.65) 42% 54%,transparent 56%) 0 0/16px 11px,
+  radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.1) 0 36%,rgba(0,0,0,.65) 42% 54%,transparent 56%) 8px 5.5px/16px 11px,#0b0b0b}
+.film.sk-black .plate2{height:calc(var(--sf) + 252px);border-radius:0 0 26px 26px;
+  background:linear-gradient(115deg,rgba(255,255,255,.2),transparent 22%),linear-gradient(#262626,#0a0a0a 45%,#050505);
+  border-bottom:3px solid #000;box-shadow:0 7px 0 #1b1b1b,0 9px 14px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.18)}
+.film.sk-black .pt{font:italic 700 17px "Segoe Script","Brush Script MT",cursive;letter-spacing:.02em;text-indent:0;color:#ece7da;text-shadow:none;top:calc(var(--sf) + 8px)}
+.film.sk-black .cnt{width:70px;height:70px;border-radius:50%;top:calc(var(--sf) + 68px);background:radial-gradient(circle,#f1eee4 0 53%,transparent 54%),repeating-conic-gradient(#3b3b3b 0 6deg,#121212 6deg 12deg);box-shadow:0 0 0 2px #000,0 3px 6px rgba(0,0,0,.6)}
+.film.sk-black .cnt small{display:none}
+.film.sk-black .cnt b{color:#111;text-shadow:none;font-size:24px}
+.film.sk-black .cnt b.low{color:#c4281c;text-shadow:none}
+.film.sk-black .onsw{width:58px;height:58px;border-radius:50%;top:calc(var(--sf) + 74px);background:repeating-conic-gradient(#4a4a4a 0 7deg,#131313 7deg 14deg);box-shadow:0 0 0 2px #000,0 3px 6px rgba(0,0,0,.6)}
+.film.sk-black .onsw i,.film.sk-black .onsw small{display:none}
+.film.sk-black .eye{background:#000;border-radius:20px;padding:9px;box-shadow:0 0 0 6px #2a2a2a,0 0 0 8px #000,0 8px 14px rgba(0,0,0,.7)}
+.film.sk-black .mwin{background:radial-gradient(circle,#f1eee4 0 44%,transparent 45%),repeating-conic-gradient(#3d3d3d 0 4deg,#161616 4deg 8deg);box-shadow:0 0 0 7px #1c1c1c,0 0 0 9px #000,0 6px 12px rgba(0,0,0,.7)}
+.film.sk-black .lvz{--ar1:#5a5a5a;--ar2:#262626;--ar3:#070707;--pd1:#5b5b59;--pd2:#2a2a29;--pd3:#080808;--rg:rgba(255,255,255,.1)}
+.film.sk-black .fshut{background:repeating-conic-gradient(#4a4a4a 0 4deg,#141414 4deg 8deg)}
+.film.sk-black .fshut b{background:radial-gradient(circle at 38% 30%,#686868,#1c1c1c 52%,#000)}
+
+/* ───────── 3. 데이터백 SLR (검정 플라스틱 · LCD 패널 · 빨간 LED) ───────── */
+.film.sk-databack .shell{background:
+  radial-gradient(circle at 25% 30%,rgba(255,255,255,.06) 0 1px,transparent 1.5px) 0 0/5px 5px,
+  radial-gradient(circle at 75% 70%,rgba(0,0,0,.6) 0 1.2px,transparent 1.7px) 2px 2px/5px 5px,#161616}
+.film.sk-databack .plate2{height:calc(var(--sf) + 232px);background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,transparent 1px 4px),linear-gradient(#2d2d2d,#151515);
+  border-bottom:3px solid #000;box-shadow:0 6px 12px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.14)}
+.film.sk-databack .pt{color:#a9a69c;text-shadow:none}
+.film.sk-databack .cnt{top:calc(var(--sf) + 54px);background:#060606;box-shadow:inset 0 0 8px #000,0 0 0 2px #3a3a3a}
+.film.sk-databack .onsw{top:calc(var(--sf) + 54px);width:70px;height:46px;background:#0b0b0b;box-shadow:0 0 0 2px #3a3a3a}
+.film.sk-databack .onsw i{width:34px;height:12px;border-radius:2px;background:#d02a1e;box-shadow:0 0 10px rgba(255,60,40,.8)}
+.film.sk-databack .onsw small{display:none}
+.film.sk-databack .eye{background:#080808;border-radius:14px;padding:9px;box-shadow:0 0 0 4px #333,0 0 0 6px #050505,0 8px 12px rgba(0,0,0,.7)}
+.film.sk-databack .vfwin{height:150px}
+.film.sk-databack .memo{margin-top:26px;padding:0;width:calc(100% - 34px);max-width:350px;border-radius:6px;overflow:hidden;
+  background:linear-gradient(90deg,#262626 0 17%,#0c0c0c 17% 83%,#262626 83%);box-shadow:0 0 0 2px #333,0 5px 10px rgba(0,0,0,.7)}
+.film.sk-databack .memo::before{content:"MULTI FUNCTION BACK";display:block;text-align:center;font:700 10px Arial,sans-serif;letter-spacing:.1em;color:#e6e2d6;padding:7px 0 6px;background:#0c0c0c}
+.film.sk-databack .mwin{width:auto;margin:0 17% 12px;height:96px;border:5px solid #1a1a1a;background:linear-gradient(#b6c4a5,#98a888);box-shadow:inset 0 3px 8px rgba(0,0,0,.35)}
+.film.sk-databack .mwin::after{background:linear-gradient(120deg,rgba(255,255,255,.28),transparent 28%)}
+.film.sk-databack .lbl{background:none;color:#2b3626;padding:6px 8px 5px}
+.film.sk-databack .lt small{background:none;color:#2b3626;padding:0;font-size:9px}
+.film.sk-databack .lt em{color:#2b3626;font-size:6.5px}
+.film.sk-databack .lm b{font-size:13px;color:#2b3626}
+.film.sk-databack .lm i{font-size:36px;color:#2b3626;line-height:.85}
+.film.sk-databack .lb{border-top:2px solid #2b3626;font-size:8px}
+.film.sk-databack .fshut b{background:radial-gradient(circle at 38% 30%,#555,#1a1a1a 52%,#000)}
+.film.sk-databack .lvz{--ar1:#585858;--ar2:#2c2c2c;--ar3:#0b0b0b;--pd1:#3b3b3b;--pd2:#1d1d1d;--pd3:#050505}
+
+/* ───────── 4. 클래식 컴팩트 (회색 윗판 · 노란 태그 · 후면 LCD) ───────── */
+.film.sk-xclassic .shell{background:
+  radial-gradient(circle at 20% 30%,rgba(255,255,255,.07) 0 1.2px,transparent 1.7px) 0 0/6px 6px,
+  radial-gradient(circle at 70% 60%,rgba(0,0,0,.55) 0 1.4px,transparent 1.8px) 3px 2px/6px 6px,#141414}
+.film.sk-xclassic .plate2{height:calc(var(--sf) + 236px);background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 3px),linear-gradient(#55575b,#2a2c2f 60%,#1f2022);
+  border-bottom:3px solid #0a0a0a;box-shadow:0 6px 12px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.25)}
+.film.sk-xclassic .plate2::before{content:"";position:absolute;left:50%;top:calc(var(--sf) + 12px);width:56px;height:13px;margin-left:-28px;border-radius:2px;background:linear-gradient(#ecd88f,#b7993f);box-shadow:0 0 0 1px #2a2518}
+.film.sk-xclassic .pt{left:auto;right:20px;top:calc(var(--sf) + 12px);text-align:right;letter-spacing:.4em;color:#c9ccd1;text-shadow:none;width:auto}
+.film.sk-xclassic .eye{left:100px;transform:none;top:calc(var(--sf) + 44px);background:#080808;border-radius:16px;padding:8px;box-shadow:0 0 0 4px #6f7176,0 0 0 6px #0a0a0a,0 7px 12px rgba(0,0,0,.6)}
+.film.sk-xclassic .vfwin{height:140px}
+.film.sk-xclassic .cnt{left:20px;top:calc(var(--sf) + 56px);width:64px;height:40px;border-radius:6px}
+.film.sk-xclassic .cnt b{font-size:22px}
+.film.sk-xclassic .onsw{right:20px;top:calc(var(--sf) + 56px);width:112px;height:38px;border-radius:19px;background:#0b0c0d;box-shadow:0 0 0 2px #53565a;gap:0}
+.film.sk-xclassic .onsw i{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e4e6e9,#7a7d82)}
+.film.sk-xclassic .onsw small{display:none}
+.film.sk-xclassic .onsw::after{content:"STILL · MOVIE";font:700 8px var(--mono);letter-spacing:.08em;color:#d7dadf;margin-left:8px}
+.film.sk-xclassic .memo{position:relative;margin:42px 0 0 38px;padding:0;border-radius:6px;background:#0a0a0a;box-shadow:0 0 0 3px #202124,0 6px 12px rgba(0,0,0,.7)}
+.film.sk-xclassic .memo::before{content:attr(data-tag);position:absolute;left:-46px;top:6px;width:32px;height:132px;border-radius:16px;
+  background:linear-gradient(#ffd641,#e69a00);writing-mode:vertical-rl;text-align:center;font:800 11px Arial,sans-serif;letter-spacing:.06em;line-height:32px;color:#111;box-shadow:0 0 0 2px #111,0 3px 6px rgba(0,0,0,.5)}
+.film.sk-xclassic .mwin{width:210px;height:140px;border:0;border-radius:3px;background:#0b0e12}
+.film.sk-xclassic .mwin::after{background:linear-gradient(120deg,rgba(255,255,255,.12),transparent 30%)}
+.film.sk-xclassic .lbl{background:linear-gradient(#111821,#080a0e);color:#fff;padding:8px 10px}
+.film.sk-xclassic .lt small{background:#ffd641;color:#111}
+.film.sk-xclassic .lt em{color:#9fb0c4}
+.film.sk-xclassic .lm b{font-size:14px;color:#fff}
+.film.sk-xclassic .lm i{color:#ffd641;font-size:42px}
+.film.sk-xclassic .lb{border-top:1px solid #444;color:#9fb0c4}
+.film.sk-xclassic .lvz{--ar1:#7a7d83;--ar2:#3c3e42;--ar3:#18191b;--pd1:#46484c;--pd2:#222325;--pd3:#090909}
+.film.sk-xclassic .fshut b{background:radial-gradient(circle at 38% 30%,#6a6c71,#222325 52%,#000)}
+
+/* ───────── 가로 모드: 레버 암을 윗판 오른쪽에 ───────── */
+@media all{
+  .lvz{left:auto;right:calc(env(safe-area-inset-right,0px) + 104px);top:0;width:250px;height:116px;--px:62%;--py:78px;--L:92px}
+  .lvz .wst{display:none}
+  .film:not(.sk-kodak) .fshut{margin-top:0}
+  .film.sk-chrome .plate2,.film.sk-black .plate2,.film.sk-databack .plate2,.film.sk-xclassic .plate2{height:116px}
+  .film.sk-chrome .cnt,.film.sk-black .cnt{top:22px;width:64px;height:64px}
+  .film.sk-chrome .onsw,.film.sk-black .onsw,.film.sk-databack .onsw,.film.sk-xclassic .onsw{display:none}
+  .film.sk-databack .cnt{top:34px}
+  .film.sk-xclassic .cnt{top:34px}
+  .film.sk-xclassic .eye{left:50%;transform:translateX(-50%);top:12px}
+  .film.sk-xclassic .plate2::before{left:calc(50% - 160px)}
+  .film.sk-xclassic .pt{display:none}
+  .film.sk-chrome .vfwin,.film.sk-black .vfwin,.film.sk-databack .vfwin,.film.sk-xclassic .vfwin{height:84px}
+  .film.sk-chrome .memo,.film.sk-black .memo{top:138px;left:50%;margin:0}
+  .film.sk-chrome .mwin,.film.sk-black .mwin{width:140px;height:140px}
+  .film.sk-databack .memo{position:absolute;left:50%;top:134px;transform:translateX(-50%);margin:0;width:340px}
+  .film.sk-xclassic .memo{position:absolute;left:50%;top:134px;transform:translateX(-50%);margin:0}
+}
+
+/* ───────── 스킨 선택 그리드 ───────── */
+.skg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%}
+.skg button{padding:9px 4px;border-radius:10px;border:1px solid #4a4741;background:transparent;color:#b9b4a8;font:600 11px var(--mono);letter-spacing:.02em;line-height:1.3}
+.skg button.on{background:#e8e3d6;color:#1b1a18}
+.srow.col{flex-direction:column;align-items:stretch;gap:8px}
+.lcnt .skg{max-width:340px}
+
+
+/* ═════ 필름 모드: 가로 스킨 고정 무대(852×393) — 화면에 맞춰 축소/확대만 하고 배치는 절대 바뀌지 않음 ═════ */
+.film{inset:auto;left:50%;margin-left:-426px;width:852px;height:393px;--sf:0px;
+  top:var(--sy,0px);transform:rotate(var(--sr,0deg)) scale(var(--ss,1));transform-origin:50% 50%}
+.app.m-film{background:#0a0a09}
+/* 축소된 스킨의 작은 조작부도 누르기 쉽게 터치 영역 확대 */
+.m-film.portrait .fshut::after{content:"";position:absolute;inset:-28px;border-radius:50%}
+
+
+/* ═════ 가로 무대 공통 레이아웃: 뷰파인더는 윗판 가운데에서 아래로 내려오는 프리즘 형태, 필름 라벨은 좌/우 옆 ═════ */
+.film .vfwin{height:150px!important;aspect-ratio:3/2!important}
+.film .vfview{position:absolute;inset:0;overflow:hidden;background:#000}  /* 영상은 고정된 창을 항상 가득 채움(cover) */
+.film .vfview>.scene{position:absolute;inset:0;width:100%;height:100%}
+.film .eye{top:12px!important}
+.film .memo{top:152px!important;transform:none!important;margin:0!important}
+.film.sk-chrome .memo{left:84px}
+.film.sk-black .memo{left:auto;right:96px}
+.film.sk-databack .memo{left:auto;right:30px;width:280px}
+.film.sk-databack .mwin{margin:0 12% 12px}
+.film.sk-xclassic .memo{left:78px}
+.film.sk-classic .memo{left:70px}
+.film.sk-kodak .memo{left:auto;right:30px}
+.film.sk-kodak .mwin{width:250px}
+.film.sk-kodak .wslot{right:calc(env(safe-area-inset-right,0px) + 102px);width:180px}
+.film.sk-classic .memo{left:46px}
+.film.sk-classic .mwin{width:196px;height:126px}
+.film.sk-classic .lm i{font-size:40px}
+
+
+/* ═════ 설정 진입: 보이는 'MENU' 버튼 (뒷면 메뉴 버튼처럼) ═════ */
+.film .screw{left:calc(env(safe-area-inset-left,0px) + 18px);bottom:14px;width:86px;height:36px;margin:0;border:0;border-radius:18px;z-index:4;
+  display:flex;align-items:center;justify-content:center;gap:7px;padding:0;
+  background:linear-gradient(#f5f2e9,#aaa69b);box-shadow:0 0 0 1.5px #0a0a0a,0 3px 6px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.8);
+  font:800 11px var(--mono);letter-spacing:.16em;color:#1f1e1a;cursor:pointer}
+.film .screw i{font-style:normal;font-size:15px;line-height:1;letter-spacing:0}
+.film .screw::before{display:none}
+.film .screw::after{content:"";display:block;position:absolute;inset:-12px;left:-12px;top:-12px;width:auto;height:auto;background:none;transform:none}
+.film.sk-black .screw,.film.sk-databack .screw,.film.sk-xclassic .screw{background:linear-gradient(#4a4a4a,#151515);color:#ece7da;box-shadow:0 0 0 1.5px #000,0 3px 6px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.18)}
+.film.sk-kodak .screw{background:linear-gradient(#2b2b2b,#0c0c0c);color:#f8cf1a;box-shadow:0 0 0 2px #fff,0 0 0 4px #111,0 3px 6px rgba(0,0,0,.45)}
+.film .screw.pulse{animation:menuPulse 1.4s ease-in-out infinite}
+@keyframes menuPulse{0%,100%{box-shadow:0 0 0 1.5px #0a0a0a,0 0 0 0 rgba(255,210,63,.0)}50%{box-shadow:0 0 0 1.5px #0a0a0a,0 0 0 9px rgba(255,210,63,.45)}}
+
+
+/* ═════ v-j: 톱니바퀴 버튼 · 슬라이드 와인더(잠금 해제식) · 일회용 개선 · 실버 클래식 M ═════ */
+.film .screw{width:42px;height:42px;border-radius:50%;padding:0;left:calc(env(safe-area-inset-left,0px) + 18px);bottom:14px;gap:0;letter-spacing:0}
+.film .screw svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* 필름 카메라 스킨은 처음의 '왼쪽→오른쪽 슬라이드' 레버, 일회용만 롤 */
+.film:not(.sk-kodak) .lvz{display:none}
+.film:not(.sk-kodak) .wslot{display:block;position:absolute;right:calc(env(safe-area-inset-right,0px) + 108px);top:32px;width:190px;height:52px;margin:0;z-index:3}
+.film:not(.sk-kodak) .wslot .tk{left:92px;right:70px}
+.film:not(.sk-kodak) .lever{width:82px;height:44px;top:4px}
+.film:not(.sk-kodak) .wst{right:12px;font-size:8px}
+.film.sk-chrome .wslot,.film.sk-black .wslot,.film.sk-databack .wslot,.film.sk-xclassic .wslot,.film.sk-classic .wslot{display:block}
+/* 일회용: 촘촘한 롤 + 검정 셔터 */
+.film.sk-kodak .rw{background:repeating-linear-gradient(90deg,#3d3b37 0 1px,#e2ded3 1px 2px,#a39f95 2px 3px);background-position-x:calc(var(--rp,0)*1px)}
+.film.sk-kodak .fshut{background:radial-gradient(circle at 36% 28%,#5a5a58,#171717 52%,#000);padding:0;box-shadow:0 0 0 5px #111,0 0 0 9px #fff,0 0 0 11px #111,0 7px 12px rgba(0,0,0,.45)}
+.film.sk-kodak .fshut b{background:none;box-shadow:inset 0 3px 5px rgba(255,255,255,.28),inset 0 -7px 11px rgba(0,0,0,.65)}
+
+/* ───────── 7. 실버 클래식 M (참고 영상: 실버 레인지파인더 M3) ───────── */
+.film.sk-m3.sk-chrome .shell{background:
+  radial-gradient(circle at 20% 30%,rgba(255,255,255,.07) 0 1.2px,transparent 1.7px) 0 0/6px 6px,
+  radial-gradient(circle at 70% 60%,rgba(0,0,0,.6) 0 1.5px,transparent 1.9px) 3px 2px/6px 6px,#0f0f0e}
+.film.sk-m3.sk-chrome .plate2{height:118px;border-radius:0 0 14px 14px;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.16) 0 1px,transparent 1px 3px),linear-gradient(#f6f5f1,#d3d2cc 38%,#a8a7a0 39%,#e2e1db 70%,#b6b5ae);
+  box-shadow:0 5px 0 #8c8b84,0 8px 12px rgba(0,0,0,.7),inset 0 -2px 0 rgba(255,255,255,.55)}
+/* 액세서리 슈 홈 + 스크립트 각인 */
+.film.sk-m3.sk-chrome .plate2::before{content:"";position:absolute;left:190px;top:8px;width:104px;height:16px;border-radius:3px;
+  background:linear-gradient(#2d2d2b,#0b0b0a);box-shadow:inset 0 0 0 2px #d9d8d2,0 1px 0 #fff,0 0 0 1.5px #6a6962}
+.film.sk-m3.sk-chrome .pt{left:196px;right:auto;top:40px;width:auto;text-align:left;font:italic 700 26px "Segoe Script","Brush Script MT",cursive;letter-spacing:.02em;text-indent:0;color:#4a4943;text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.film.sk-m3.sk-chrome .pt::after{content:"ANALOG FILM CAMERA";display:block;font:700 7px var(--mono);letter-spacing:.2em;color:#6f6e67;margin-top:1px;text-shadow:none}
+/* 왼쪽 되감기 노브 + 프레임 카운터 다이얼 */
+.film.sk-m3.sk-chrome .onsw{display:block;left:20px;right:auto;top:14px;width:72px;height:72px;border-radius:50%;
+  background:radial-gradient(circle,#f1f0eb 0 36%,#9c9b94 38% 44%,transparent 46%),repeating-conic-gradient(#f4f3ee 0 5deg,#868680 5deg 10deg);
+  box-shadow:0 0 0 2px #151514,0 4px 6px rgba(0,0,0,.55)}
+.film.sk-m3.sk-chrome .cnt{left:106px;top:26px;width:64px;height:64px}
+.film.sk-m3.sk-chrome .eye{box-shadow:0 0 0 6px #e6e5df,0 0 0 8px #121211,0 8px 14px rgba(0,0,0,.65)}
+/* 뒷문(도어) 테두리 + 코너 나사 */
+.film.sk-m3.sk-chrome .memo{left:90px}
+.film.sk-m3.sk-chrome .memo::before{content:"";position:absolute;left:-58px;top:-26px;width:calc(100% + 116px);height:calc(100% + 52px);border-radius:14px;border:3px solid #d6d5cf;
+  box-shadow:0 0 0 2px #0a0a0a,inset 0 0 0 2px #0a0a0a,0 3px 8px rgba(0,0,0,.6);pointer-events:none;z-index:0}
+/* 셔터 버튼: 은색 나사산 링 + 오목한 가운데 */
+.film.sk-m3.sk-chrome .fshut b{position:relative}
+.film.sk-m3.sk-chrome .fshut b::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#555,#0c0c0b);box-shadow:inset 0 1px 2px rgba(255,255,255,.4)}
+.film.sk-m3.sk-chrome .wslot{right:calc(env(safe-area-inset-right,0px) + 108px)}
+.film.sk-m3.sk-chrome .mwin{position:relative;z-index:1}
+
+
+/* ═════ 장전 상태 표시: 장전됨 = 초록 링 + 밝게 / 미장전 = 어둡게 + 뷰파인더에 WIND ═════ */
+.film .vfwin::before{content:attr(data-msg);position:absolute;inset:0;z-index:4;display:none;place-items:center;background:rgba(0,0,0,.52);
+  color:#ffd23f;font:800 13px var(--mono);letter-spacing:.24em;pointer-events:none;text-shadow:0 1px 3px #000}
+.film:not(.is-armed) .vfwin[data-msg]:not([data-msg=""])::before{display:grid}
+.film:not(.sk-kodak) .fshut.armed{box-shadow:0 0 0 3px #0a0a0a,0 0 0 6px #3ddc6a,0 0 18px 9px rgba(61,220,106,.5),0 6px 12px rgba(0,0,0,.7)}
+.film.sk-kodak .fshut.armed{box-shadow:0 0 0 5px #111,0 0 0 9px #3ddc6a,0 0 0 11px #111,0 0 20px 12px rgba(61,220,106,.55),0 7px 12px rgba(0,0,0,.45)}
+.film.is-armed .wslot{box-shadow:inset 0 3px 8px #000,0 0 0 2px #1e7a3f,0 0 0 4px #0b0b0a}
+.fshut.pop{animation:fpop .6s ease-out}
+@keyframes fpop{0%{transform:scale(.94)}45%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+/* 설정(톱니바퀴) 버튼: 오른쪽 아래 */
+.film .screw{left:auto;right:calc(env(safe-area-inset-right,0px) + 18px)}
+html,body{overscroll-behavior:none;overflow:hidden}
+.app,.film{overscroll-behavior:none;touch-action:none}
+.film .pg,.film .viewer{touch-action:pan-x pan-y}
+
+/* ═════ 설정 시트: 아래에 낮게 붙고, 스킨을 가리지 않음 + 스킨 썸네일 스트립 ═════ */
+.mdl.docked{background:transparent;display:flex;align-items:flex-end;justify-content:center;padding:0;pointer-events:auto;z-index:60}
+.mdl.docked .mbox{width:100%;max-width:none;border-radius:16px 16px 0 0;border:0;border-top:1px solid #3a3833;background:rgba(20,19,18,.94);backdrop-filter:blur(8px);padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));text-align:left;max-height:none;box-shadow:0 -8px 24px rgba(0,0,0,.55)}
+.dock .dh{display:flex;justify-content:space-between;align-items:center;padding:0 4px 6px}
+.dock .dh b{font:700 13px var(--mono);letter-spacing:.1em}
+.dock .dh button{flex:none;padding:6px 14px;font-size:11px}
+.skstrip{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}
+.skstrip::-webkit-scrollbar{display:none}
+.skstrip .sk{flex:0 0 112px;position:relative;padding:0;border:2px solid #3a3833;border-radius:10px;background:#000;overflow:hidden;color:#ddd}
+.skstrip .sk img{display:block;width:100%;height:54px;object-fit:cover}
+.skstrip .sk b{position:absolute;left:5px;top:4px;min-width:20px;height:20px;border-radius:10px;background:rgba(0,0,0,.75);font:800 11px var(--mono);display:grid;place-items:center;color:#ffd23f}
+.skstrip .sk span{display:block;padding:3px 4px 4px;font:600 9px var(--mono);letter-spacing:.02em;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:#141312}
+.skstrip .sk.on{border-color:#e8e3d6;box-shadow:0 0 0 2px rgba(232,227,214,.35)}
+.dock .rows{display:flex;gap:6px;flex-wrap:wrap}
+.dock .srow{flex:1 1 30%;flex-direction:column;align-items:stretch;gap:3px;padding:0;font-size:10px}
+.dock .srow .seg button{padding:5px 4px!important;font-size:10px}
+
+/* ═════ 설정 패널: 오른쪽에 세로로 붙임 (스킨의 오른쪽 면), 썸네일 더 작게 ═════ */
+.mdl.docked{align-items:stretch;justify-content:flex-end}
+.mdl.docked .mbox{width:176px;height:100%;max-height:none;border-radius:16px 0 0 16px;border-top:0;border-left:1px solid #3a3833;display:flex;flex-direction:column;padding:8px 8px 8px;box-shadow:-8px 0 24px rgba(0,0,0,.55)}
+.dock .dh{flex:0 0 auto;padding:0 2px 6px}
+.skstrip{flex:1 1 auto;min-height:0;flex-direction:column;overflow-x:hidden;overflow-y:auto;gap:6px;padding:2px 2px 6px;touch-action:pan-y}
+.skstrip .sk{flex:0 0 auto;width:100%}
+.skstrip .sk img{height:34px}
+.skstrip .sk b{min-width:17px;height:17px;border-radius:9px;font-size:10px;left:4px;top:3px}
+.skstrip .sk span{padding:2px 3px 3px;font-size:8.5px}
+.dock .rows{flex:0 0 auto;flex-direction:column;gap:5px;padding-top:4px;border-top:1px solid #2a2926}
+.dock .srow{flex:0 0 auto;flex-direction:row;align-items:center;justify-content:space-between;gap:6px;font-size:10px}
+.dock .srow>span{flex:0 0 auto;white-space:nowrap}
+.dock .srow .seg{flex:1 1 auto}
+.dock .srow .seg button{padding:4px 2px!important;font-size:9px;letter-spacing:0}
+.skstrip .sk img{object-position:50% 12%}

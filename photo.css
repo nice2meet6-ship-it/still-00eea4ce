@@ -1,0 +1,55 @@
+/* ═══════ 실사 베이스 스킨 (고해상도 실제 카메라 사진 + 사진에 녹아드는 부품) ═══════ */
+.film.sk-pslr .shell,.film.sk-pfun .shell{background:#161615!important}
+.film.sk-pslr .shell::before,.film.sk-pslr .shell::after{display:none}
+.film.sk-pslr .cambody,.film.sk-pfun .cambody{position:absolute;inset:auto;background-repeat:no-repeat;background-size:100% 100%;box-shadow:none!important;border-radius:0;
+  filter:drop-shadow(0 14px 12px rgba(40,34,24,.5))}
+.film.sk-pslr .cambody{left:0;top:-40px;width:852px;height:541px;background-image:url(skins/ae1.webp);filter:none}
+.film.sk-pfun .cambody{left:0;top:0;width:852px;height:393px;background-image:url(skins/fun3.jpg);filter:none}
+.film.sk-pslr .cambody::before,.film.sk-pslr .cambody::after,.film.sk-pfun .cambody::before,.film.sk-pfun .cambody::after{display:none!important}
+.film.sk-pslr .plate2,.film.sk-pfun .plate2{inset:0;top:0;height:100%!important;background:none!important;border:0;box-shadow:none!important;border-radius:0}
+.film.sk-pslr .plate2::after,.film.sk-pslr .plate2::before,.film.sk-pfun .plate2::after,.film.sk-pfun .plate2::before{display:none!important}
+.film.sk-pslr .pt,.film.sk-pfun .pt,.film.sk-pslr .onsw,.film.sk-pfun .onsw,.film.sk-pslr .deco,.film.sk-pfun .deco{display:none!important}
+.film.sk-pslr .eye,.film.sk-pfun .eye{padding:0!important;background:none!important;box-shadow:none!important;border-radius:3px;transform:none!important}
+.film.sk-pslr .vfwin,.film.sk-pfun .vfwin{border-radius:2px;box-shadow:inset 0 0 8px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.6)}
+.film.sk-pslr .vfwin::after,.film.sk-pfun .vfwin::after{background:linear-gradient(125deg,rgba(255,255,255,.22),transparent 40%),radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45))}
+.film.sk-pslr .vfframe,.film.sk-pfun .vfframe{inset:5px}
+
+/* ── Canon AE-1형 SLR (풀스크린 클로즈업): 접안창=뷰파인더, 메모홀더 창=필름 라벨, 윗판 다이얼=카운터 ── */
+.film.sk-pslr .eye{left:346px!important;top:109px!important}
+.film.sk-pslr .vfwin{height:69px!important}
+.film.sk-pslr .cnt{left:62px;top:72px!important;width:100px;height:40px;background:none;box-shadow:none;border-radius:0;flex-direction:row;gap:5px}
+.film.sk-pslr .cnt small{display:none}
+.film.sk-pslr .cnt b{font:600 30px var(--mono);color:#e3dfd2;text-shadow:0 1px 0 #000;line-height:1}
+.film.sk-pslr .cnt b.low{color:#ff8a6a}
+.film.sk-pslr .memo{left:304px!important;top:296px!important;transform:none!important;padding:0!important;background:none!important;box-shadow:none!important;border-radius:0;margin:0!important}
+.film.sk-pslr .mwin{width:190px;height:127px;border:0;border-radius:0;background:#f4f1e8}
+.film.sk-pslr .mwin::after{background:linear-gradient(120deg,rgba(255,255,255,.3),transparent 32%);display:block}
+.film.sk-pslr .wslot{display:block;left:556px;right:auto;top:62px;width:176px;height:54px;background:none!important;border-radius:0;box-shadow:none!important}
+.film.sk-pslr .wslot .tk{display:none}
+.film.sk-pslr .lever{width:118px;height:42px;top:6px;left:4px;border-radius:14px 8px 8px 14px;background:linear-gradient(rgba(70,70,68,.55),rgba(8,8,8,.78));box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 0 0 1px rgba(0,0,0,.6)}
+.film.sk-pslr .lever b{font:700 8px var(--mono);letter-spacing:.2em;color:#d8d4c7}
+.film.sk-pslr .wst{left:auto;right:4px;top:50%;bottom:auto;transform:translateY(-50%);font-size:7px;letter-spacing:.06em;color:#e3dfd2;text-shadow:0 1px 1px #000;pointer-events:none}
+.film.sk-pslr .fshut{left:752px;right:auto;top:152px;width:58px;height:58px;padding:4px;background:radial-gradient(circle at 36% 28%,#5c5c5a,#171716 55%,#000);box-shadow:0 0 0 2px #000,0 0 0 4px #7c7b75,0 4px 6px rgba(0,0,0,.6)}
+.film.sk-pslr .fshut b{background:none;box-shadow:inset 0 2px 3px rgba(255,255,255,.25),inset 0 -5px 7px rgba(0,0,0,.7)}
+.film.sk-pslr .fshut.armed{box-shadow:0 0 0 2px #000,0 0 0 4px #3ddc6a,0 0 12px 6px rgba(61,220,106,.55),0 4px 6px rgba(0,0,0,.6)}
+.film.sk-pslr .screw{left:792px;right:auto;top:342px;bottom:auto;width:36px;height:36px;background:linear-gradient(#3a3a38,#0d0d0c);color:#d8d4c7;box-shadow:0 0 0 1.5px #000,0 0 0 2.5px rgba(255,255,255,.12),0 2px 4px rgba(0,0,0,.6)}
+.film.sk-pslr .screw svg{width:19px;height:19px}
+
+/* ── 일회용(직접 렌더한 이미지): 부품 좌표는 이미지(852×393)와 1:1 ── */
+.film.sk-pfun .eye{left:302px!important;top:156px!important}
+.film.sk-pfun .vfwin{height:80px!important;border-radius:6px}
+.film.sk-pfun .cnt{left:35px;top:79px!important;width:78px;height:78px;border-radius:50%;background:#efeadb;box-shadow:inset 0 3px 6px rgba(0,0,0,.45)}
+.film.sk-pfun .cnt b{font-size:26px}
+.film.sk-pfun .wslot{display:block;left:658px;right:auto;top:62px;width:120px;height:86px;background:none!important;box-shadow:none!important}
+.film.sk-pfun .rw{display:block;left:0;right:0;top:0;bottom:0;border-radius:6px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 1px,rgba(0,0,0,.35) 1px 4px)!important;background-position-x:calc(var(--rp,0)*1px)!important;box-shadow:none;cursor:ew-resize}
+.film.sk-pfun .rw::after{display:none}
+.film.sk-pfun .wst{left:0;top:auto;bottom:-18px;font-size:9px;color:#efeadb;text-shadow:0 1px 1px #000}
+.film.sk-pfun .fshut{left:514px;right:auto;top:4px;width:72px;height:60px;border-radius:50%;padding:0;background:radial-gradient(circle at 36% 28%,#626260,#1a1a19 55%,#000);box-shadow:0 0 0 2px #000,0 0 0 4px #86857f,0 4px 6px rgba(0,0,0,.6)}
+.film.sk-pfun .fshut.armed{box-shadow:0 0 0 2px #000,0 0 0 4px #3ddc6a,0 0 14px 7px rgba(61,220,106,.6),0 4px 6px rgba(0,0,0,.6)}
+.film.sk-pfun .memo{left:147px!important;top:263px!important;right:auto!important;transform:scale(.79)!important;transform-origin:0 0;padding:0;margin:0!important}
+.film.sk-pfun .mwin{box-shadow:0 2px 5px rgba(0,0,0,.45)}
+.film.sk-pfun .screw{left:790px;right:auto;top:342px;bottom:auto;width:36px;height:36px}
+.film.sk-pfun .screw svg{width:19px;height:19px}
+
+/* 터치 영역을 가리는 장식 요소가 없도록 */
+.film.sk-pslr .wslot::after,.film.sk-pfun .wslot::after{display:none!important}

@@ -1,0 +1,11 @@
+/* 실사 SLR 4종의 렌더 버전: 같은 부품 배치 위에 렌더 이미지만 교체 */
+.app .film.sk-r.sk-px700 .cambody{background-image:url(skins/px700r.jpg)}
+.app .film.sk-r.sk-pzs .cambody{background-image:url(skins/pzsr.jpg)}
+.app .film.sk-r.sk-pzb .cambody{background-image:url(skins/pzbr.jpg)}
+.app .film.sk-r.sk-pslr .cambody{background-image:url(skins/pslrr.jpg);top:0!important;height:393px!important}
+/* 제니트 블랙(렌더): WIND 글씨 표시, 상태 표시를 레버와 같은 높이로 */
+.app .film.sk-r.sk-pzb .lever b{opacity:1;font:800 10px var(--mono);letter-spacing:.2em;color:#e8e3d6}
+.app .film.sk-r.sk-pzb .wst{top:50%!important;bottom:auto!important;transform:translateY(-50%);right:10px;font-size:9px;letter-spacing:.08em;color:#e8e3d6;text-shadow:0 1px 1px #000}
+.app .film.sk-r.sk-pzb .wslot{left:540px;top:88px;width:206px;height:60px}
+.app .film.sk-r.sk-pzb .lever{width:112px;height:54px}
+.app .film.sk-r.sk-pzb .wst{right:8px}
