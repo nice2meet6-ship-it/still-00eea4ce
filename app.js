@@ -6,7 +6,7 @@ const app = $('.app'), vf = $('.vf'), scene = $('#scene'), grainEl = $('#grain')
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const DIAG = location.search.includes('diag');
 /* 필카 앱 / 디카 앱 분리: 페이지가 window.STILL_APP 으로 지정 */
-const BUILD = '20261026e';
+const BUILD = '20261026g';
 const APP = window.STILL_APP === 'digital' ? 'digital' : 'film';
 const SRC = (document.currentScript && document.currentScript.src) || location.href;
 
@@ -720,13 +720,19 @@ async function openViewer(list, idx, onChange) {
 }
 
 /* ═════════ 사진 격자 + 선택 저장 ═════════ */
-async function openGrid({ title, fetch, sub }) {
+async function openGrid({ title, fetch, sub, onClose }) {
   const ov = document.createElement('div'); ov.className = 'pg';
-  ov.innerHTML = `<div class="pgh"><button id="gb">◂ 뒤로</button><div><b>${title}</b><small>${sub || ''}</small></div><button id="gs">선택</button></div><div class="pgg"></div><div class="pgf"><button id="gall" class="ghost">전체</button><button id="gdel" class="del">삭제</button><button id="gsave">저장 (0)</button></div>`;
+  ov.innerHTML = `<div class="pgh"><button id="gb">◂ 뒤로</button><div><b>${title}</b><small>${sub || ''}</small></div><div class="pgr"><button id="gz" aria-label="썸네일 크기">▦</button><button id="gs">선택</button></div></div><div class="pgg"></div><div class="pgf"><button id="gall" class="ghost">전체</button><button id="gdel" class="del">삭제</button><button id="gsave">저장 (0)</button></div>`;
   app.appendChild(ov);
   let list = [], sel = new Set(), selecting = false, urls = [];
   const grid = ov.querySelector('.pgg');
-  const upd = () => { $('#gsave').textContent = `저장 (${sel.size})`; $('#gsave').disabled = $('#gdel').disabled = !sel.size; };
+  const COLS = [3, 4, 5], setCols = () => { grid.style.gridTemplateColumns = `repeat(${cfg.gridCols || 4},1fr)`; };
+  setCols();
+  const upd = () => {
+    ov.querySelector('#gsave').textContent = `저장 (${sel.size})`; ov.querySelector('#gsave').disabled = ov.querySelector('#gdel').disabled = !sel.size;
+    const sm = ov.querySelector('.pgh small'); if (sm) sm.textContent = selecting ? `${sel.size}장 선택됨` : (sub || '');
+    ov.querySelector('#gall').textContent = list.length && sel.size === list.length ? '전체 해제' : '전체 선택';
+  };
   async function load() {
     urls.forEach(u => URL.revokeObjectURL(u)); urls = [];
     list = await fetch();
@@ -735,7 +741,13 @@ async function openGrid({ title, fetch, sub }) {
       const u = URL.createObjectURL(thumbBlob(m)); urls.push(u);
       const c = document.createElement('div'); c.className = 'cell'; c.innerHTML = `<img src="${u}" alt=""><i class="chk"></i>`;
       c.classList.toggle('sel', sel.has(m.id));
+      // 길게 누르면 선택 모드로 들어가며 그 사진이 선택됨 (애플 사진처럼)
+      let lp = null, lpFired = false;
+      c.addEventListener('pointerdown', () => { lpFired = false; lp = setTimeout(() => { lpFired = true; if (!selecting) { selecting = true; ov.classList.add('selecting'); ov.querySelector('#gs').textContent = '완료'; } sel.add(m.id); c.classList.add('sel'); if (navigator.vibrate) navigator.vibrate(8); upd(); }, 450); });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => c.addEventListener(ev, () => clearTimeout(lp)));
+      c.addEventListener('contextmenu', e => e.preventDefault());
       c.onclick = () => {
+        if (lpFired) { lpFired = false; return; }
         if (selecting) { sel.has(m.id) ? sel.delete(m.id) : sel.add(m.id); c.classList.toggle('sel'); upd(); }
         else openViewer(list.slice(), i, load);
       };
@@ -743,15 +755,16 @@ async function openGrid({ title, fetch, sub }) {
     });
     grid.scrollTop = grid.scrollHeight; upd();
   }
-  $('#gb').onclick = () => { urls.forEach(u => URL.revokeObjectURL(u)); ov.remove(); };
-  $('#gs').onclick = () => { selecting = !selecting; sel.clear(); ov.classList.toggle('selecting', selecting); $('#gs').textContent = selecting ? '완료' : '선택'; $$('.pg .cell').forEach(c => c.classList.remove('sel')); upd(); };
-  $('#gall').onclick = () => { const all = sel.size === list.length; sel = new Set(all ? [] : list.map(m => m.id)); $$('.pg .cell').forEach((c, i) => c.classList.toggle('sel', sel.has(list[i].id))); upd(); };
-  $('#gsave').onclick = async () => {
+  ov.querySelector('#gb').onclick = () => { urls.forEach(u => URL.revokeObjectURL(u)); ov.remove(); onClose && onClose(); };
+  ov.querySelector('#gz').onclick = () => { cfg.gridCols = COLS[(COLS.indexOf(cfg.gridCols || 4) + 1) % COLS.length]; save(); setCols(); toast(`썸네일 ${cfg.gridCols}열`, 900); };
+  ov.querySelector('#gs').onclick = () => { selecting = !selecting; sel.clear(); ov.classList.toggle('selecting', selecting); ov.querySelector('#gs').textContent = selecting ? '완료' : '선택'; $$('.pg .cell').forEach(c => c.classList.remove('sel')); upd(); };
+  ov.querySelector('#gall').onclick = () => { const all = sel.size === list.length; sel = new Set(all ? [] : list.map(m => m.id)); $$('.pg .cell').forEach((c, i) => c.classList.toggle('sel', sel.has(list[i].id))); upd(); };
+  ov.querySelector('#gsave').onclick = async () => {
     const files = []; toast('준비 중…', 4000);
     for (const m of list) if (sel.has(m.id)) { const b = await DB.blob(m.id); if (b) files.push(toFile(b, m)); }
     toastEl.classList.remove('on'); if (files.length) shareDialog(files);
   };
-  $('#gdel').onclick = async () => {
+  ov.querySelector('#gdel').onclick = async () => {
     if ((await modal(`<h3>${sel.size}장을 삭제할까요?</h3><p>삭제하면 되돌릴 수 없어요.</p>`, [{ t: '삭제', cls: 'del' }, { t: '취소', cls: 'ghost' }])) !== 0) return;
     for (const id of sel) await DB.del(id); sel.clear(); await load(); refreshThumb();
   };
@@ -762,16 +775,10 @@ async function openGrid({ title, fetch, sub }) {
 async function openDigitalLibrary() {
   // 카메라는 끄지 않고 위에 보관함만 덮는다 — 아이폰에서 카메라를 껐다 켜면 화면이 검게 멈추는 문제 방지
   const fetch = async () => (await DB.photos()).filter(p => !p.roll).sort((a, b) => a.ts - b.ts);
-  const list = await fetch();
+  if (!(await fetch()).length) { toast('아직 사진이 없어요'); return; }
   const done = () => { refreshThumb(); if (stream && video.srcObject) video.play().catch(() => {}); else startCam(); };
-  if (!list.length) { toast('아직 사진이 없어요'); return; }
-  const ov = document.createElement('div'); ov.className = 'backbar';
-  ov.innerHTML = '<button id="lgrid">▦ 전체 · 선택 저장</button><button id="lback">◂ 카메라로</button>';
-  app.appendChild(ov);
-  $('#lback').onclick = () => { ov.remove(); $$('.viewer,.pg').forEach(x => x.remove()); done(); };
-  $('#lgrid').onclick = () => openGrid({ title: '보관함', fetch, sub: '디지털' });
-  // 사진 보기의 '닫기'(또는 마지막 사진 삭제) = 카메라로 완전히 복귀 (보관함 막대·격자까지 정리)
-  openViewer(list.slice(), list.length - 1, () => { ov.remove(); $$('.viewer,.pg').forEach(x => x.remove()); done(); });
+  // 애플 사진처럼 썸네일 격자가 먼저 → 누르면 크게 보기(좌우로 넘김) → 닫으면 격자로 → 뒤로 = 카메라
+  await openGrid({ title: '보관함', sub: '디지털', fetch, onClose: done });
 }
 
 /* ═════════ 앨범 (현상된 롤) ═════════ */

@@ -255,3 +255,10 @@ body.fix .app{width:393px!important;height:852px!important;margin:0!important}
 .albums.selecting .alf{display:flex}
 .albums.selecting .alist{padding-bottom:100px}
 .fxnote{margin:8px 4px 2px;font-size:11px;color:#8d887d;text-align:center}
+.pgr{display:flex;align-items:center}
+.pgh #gz{min-width:44px;font-size:17px;padding:8px 6px}
+.pgg{gap:1px}
+.cell,.cell img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.pg.selecting .cell img{opacity:.9}
+.pgf button{white-space:nowrap;font-size:12px}
+.pgf #gall{flex:1.5}
