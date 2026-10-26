@@ -130,6 +130,12 @@
 .lc .box small{font:700 11px var(--mono);letter-spacing:.24em;color:rgba(255,255,255,.85)}
 .lc .box b{font:800 20px var(--mono);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);padding:0 6px}
 .lc .box em{font:600 11px var(--mono);font-style:normal;color:rgba(255,255,255,.85);letter-spacing:.14em}
+/* 실제 필름 사진이 있으면 사진을 카드 가득 보여주고 글자는 아래 한 줄로 */
+.lc .box{position:relative;overflow:hidden;height:190px;justify-content:flex-start;gap:0;padding-top:10px;background:#f4f2ee}
+.lc .box img{height:112px;max-width:calc(100% - 20px);object-fit:contain;flex:none;margin-bottom:6px}
+.lc .box:has(img) small{color:#6b665c;margin-top:2px}
+.lc .box:has(img) b{color:#17140f;text-shadow:none;font-size:15px;letter-spacing:.04em}
+.lc .box:has(img) em{color:#6b665c}
 .lc p{margin-top:10px;font-size:12px;line-height:1.5;color:#c9c4b8;padding:0 10px;min-height:36px}
 .lcnt{display:flex;flex-direction:column;align-items:center;gap:8px}.lcnt small{font:600 10px var(--mono);letter-spacing:.2em;color:#9b968b}
 .lcnt .seg{width:230px}
@@ -248,3 +254,4 @@ body.fix .app{width:393px!important;height:852px!important;margin:0!important}
 .albums .alf{display:none}
 .albums.selecting .alf{display:flex}
 .albums.selecting .alist{padding-bottom:100px}
+.fxnote{margin:8px 4px 2px;font-size:11px;color:#8d887d;text-align:center}

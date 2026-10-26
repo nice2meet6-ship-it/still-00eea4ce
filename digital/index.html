@@ -201,16 +201,20 @@ video#cam{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;disp
   .app .readout{padding:8px 0}
 }
 </style>
+<link rel="stylesheet" href="rollie.css?v=20261026c">
 </head>
-<body>
+<body class="rollie">
 <div class="app" id="app">
   <div class="status"><span id="clock">9:41</span><span class="r">5G <span class="bat"></span></span></div>
 
   <div class="top">
-    <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span>
-    <span class="ic"><svg viewBox="0 0 24 24"><path d="M13 3L6 13h5l-1 8 7-10h-5z"/></svg></span>
+    <div class="cnt2"><b id="rcnt">00</b></div>
+    <div class="prism"><i></i></div>
+    <span class="ic g"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span>
+    <span class="ic tl"><svg viewBox="0 0 24 24"><path d="M13 3L6 13h5l-1 8 7-10h-5z"/></svg></span>
     <span class="dot"></span>
-    <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 13V9M10 3h4"/></svg></span>
+    <span class="ic tm"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 13V9M10 3h4"/></svg></span>
+    <span class="ic st"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></span>
     <span class="ratio">3:2</span>
   </div>
 
@@ -264,6 +268,11 @@ video#cam{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;disp
   </div>
 
   <div class="bottom">
+    <div class="cards" id="cards">
+      <button class="card" data-pick="camera"><small>CAMERA</small><b></b><i></i></button>
+      <button class="card" data-pick="lens"><small>LENS</small><b></b><i></i></button>
+      <button class="card" data-pick="film"><small>FILM</small><b></b><i></i></button>
+    </div>
     <div class="dial"><div class="lab"><span>−2</span><span>−1</span><span>0</span><span>+1</span><span>+2</span></div><div class="ticks"></div></div>
     <div class="row">
       <div class="thumb"></div>
@@ -271,10 +280,11 @@ video#cam{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;disp
       <div class="flip"><svg viewBox="0 0 24 24"><path d="M4 9a8 8 0 0113-3l2 2M20 15a8 8 0 01-13 3l-2-2M19 4v4h-4M5 20v-4h4"/></svg></div>
     </div>
   </div>
+  <div class="pickov" id="pickov"><div class="pbox"><div class="ph"><span id="pickt"></span><button id="pickx">닫기</button></div><div class="pgrid" id="pickg"></div></div></div>
   <div class="home"></div>
 </div>
 
 <script>window.STILL_APP="digital"</script>
-<script src="../app.js?v=20261022a"></script>
+<script src="../app.js?v=20261026d"></script>
 </body>
 </html>

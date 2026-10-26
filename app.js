@@ -6,33 +6,33 @@ const app = $('.app'), vf = $('.vf'), scene = $('#scene'), grainEl = $('#grain')
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const DIAG = location.search.includes('diag');
 /* 필카 앱 / 디카 앱 분리: 페이지가 window.STILL_APP 으로 지정 */
-const BUILD = '20261022a';
+const BUILD = '20261026d';
 const APP = window.STILL_APP === 'digital' ? 'digital' : 'film';
 const SRC = (document.currentScript && document.currentScript.src) || location.href;
 
 /* ═════════ 필름 정의 (실제 필름의 분위기를 참고한 근사값 — 미리보기 CSS와 저장 픽셀 처리가 같은 값을 씀) ═════════ */
 const FILMS = [
-  { id: 'portra400', mk: 'MOCHI', n: 'PEACH 400', iso: 400, col: '#e8b923', d: '부드러운 파스텔 · 따뜻한 인물 톤',
+  { id: 'portra400', mk: 'KODAK', n: 'PORTRA 400', iso: 400, col: '#e8b923', d: '부드러운 파스텔 · 따뜻한 인물 톤',
     gray: 0, sat: .9, con: .96, sep: .14, hue: -3, bri: 1.05, fa: .05, fc: [255, 238, 220], g: .2, v: .25 },
-  { id: 'gold200', mk: 'MOCHI', n: 'SUNDAY 200', iso: 200, col: '#f2c200', d: '노란빛 따뜻함 · 추억의 일상 색',
+  { id: 'gold200', mk: 'KODAK', n: 'GOLD 200', iso: 200, col: '#f2c200', d: '노란빛 따뜻함 · 추억의 일상 색',
     gray: 0, sat: 1.12, con: 1.06, sep: .32, hue: -10, bri: 1.05, fa: .04, fc: [255, 225, 160], g: .32, v: .35 },
-  { id: 'ektar100', mk: 'MOCHI', n: 'BERRY 100', iso: 100, col: '#d9262c', d: '쨍한 채도 · 고운 입자의 풍경용',
+  { id: 'ektar100', mk: 'KODAK', n: 'EKTAR 100', iso: 100, col: '#d9262c', d: '쨍한 채도 · 고운 입자의 풍경용',
     gray: 0, sat: 1.38, con: 1.16, sep: .04, hue: 0, bri: 1.02, fa: 0, fc: [0, 0, 0], g: .08, v: .25 },
-  { id: 'trix400', mk: 'MOCHI', n: 'INKY 400', iso: 400, col: '#3a3a3a', d: '거칠고 진한 흑백 · 다큐 감성',
+  { id: 'trix400', mk: 'KODAK', n: 'TRI-X 400', iso: 400, col: '#3a3a3a', d: '거칠고 진한 흑백 · 다큐 감성',
     gray: 1, sat: 1, con: 1.32, sep: 0, hue: 0, bri: 1.02, fa: .04, fc: [235, 235, 235], g: .65, v: .45 },
-  { id: 'superia400', mk: 'MOCHI', n: 'MINT 400', iso: 400, col: '#2e9b4f', d: '초록·청록이 도는 시원한 스냅 색',
+  { id: 'superia400', mk: 'KODAK', n: 'ULTRAMAX 400', iso: 400, col: '#2e9b4f', d: '초록·청록이 도는 시원한 일상 스냅 색',
     gray: 0, sat: 1.15, con: 1.1, sep: 0, hue: 7, bri: 1, fa: .05, fc: [190, 235, 215], g: .36, v: .35 },
-  { id: 'velvia50', mk: 'MOCHI', n: 'NEON 50', iso: 50, col: '#7a3b8f', d: '극강 채도 · 선명한 대비의 슬라이드',
+  { id: 'velvia50', mk: 'KODAK', n: 'EKTACHROME E100', iso: 100, col: '#7a3b8f', d: '극강 채도 · 선명한 대비의 슬라이드',
     gray: 0, sat: 1.55, con: 1.22, sep: 0, hue: -2, bri: .98, fa: 0, fc: [0, 0, 0], g: .06, v: .3 },
-  { id: 'hp5', mk: 'MOCHI', n: 'GRAY 400', iso: 400, col: '#cfcfcf', d: '부드러운 계조의 클래식 흑백',
+  { id: 'hp5', mk: 'ILFORD', n: 'HP5 PLUS 400', iso: 400, col: '#cfcfcf', d: '부드러운 계조의 클래식 흑백',
     gray: 1, sat: 1, con: 1.1, sep: 0, hue: 0, bri: 1.03, fa: .06, fc: [225, 225, 225], g: .5, v: .4 },
-  { id: 'cs800t', mk: 'MOCHI', n: 'OWL 800', iso: 800, col: '#2b6e86', d: '청록 그림자 · 야간 시네마 색',
+  { id: 'cs800t', mk: 'CINESTILL', n: '800T', iso: 800, col: '#2b6e86', d: '청록 그림자 · 야간 시네마 색',
     gray: 0, sat: 1.05, con: 1.15, sep: 0, hue: 16, bri: .95, fa: .1, fc: [25, 70, 95], g: .5, v: .5 },
-  { id: 'lomo800', mk: 'MOCHI', n: 'WILD 800', iso: 800, col: '#e6542b', d: '과감한 비네팅 · 장난기 있는 진한 색',
+  { id: 'lomo800', mk: 'LOMOGRAPHY', n: 'COLOR NEG 800', iso: 800, col: '#e6542b', d: '과감한 비네팅 · 장난기 있는 진한 색',
     gray: 0, sat: 1.25, con: 1.22, sep: .15, hue: -8, bri: 1, fa: 0, fc: [0, 0, 0], g: .55, v: .65 },
 ];
 const byId = id => FILMS.find(f => f.id === id) || FILMS[0];
-const RATIOS = [{ l: '3:2', a: 2 / 3 }, { l: '4:3', a: 3 / 4 }, { l: '1:1', a: 1 }];
+const RATIOS = [{ l: '3:2', a: 2 / 3 }, { l: '4:3', a: 3 / 4 }, { l: '1:1', a: 1 }, { l: '16:9', a: 9 / 16 }];
 const ZOOMS = [1, 2, 4];
 const SKINS = [
   { id: 'pfun', n: '일회용 카메라' }, { id: 'pzbr', n: '블랙 SLR' },
@@ -44,7 +44,7 @@ const DEV_OPTS = [{ l: '즉시', ms: 0 }, { l: '1시간', ms: 36e5 }, { l: '6시
 /* ═════════ 저장되는 설정 ═════════ */
 const LS = 'still.' + APP;
 const readLS = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } };
-const cfg = Object.assign({ mode: null, sound: true, dev: 0, roll: null, seq: 1, skin: 'classic', rot: 'auto' }, readLS(LS) || readLS('still.v2') || {});
+const cfg = Object.assign({ mode: null, sound: true, dev: 0, roll: null, seq: 1, skin: 'classic', rot: 'auto', stamp: true, leak: APP === 'film' ? 1 : 0, dust: APP === 'film' ? 1 : 0 }, readLS(LS) || readLS('still.v2') || {});
 cfg.mode = APP;
 if (!['left', 'right'].includes(cfg.rot)) cfg.rot = 'left';
 const save = () => { try { localStorage.setItem(LS, JSON.stringify(cfg)); } catch {} };
@@ -185,6 +185,7 @@ function render() {
   ics[1].dataset.v = st.torch ? 'ON' : '';
   ics[2].dataset.v = st.timer ? st.timer + 's' : '';
   ics[0].dataset.v = st.grid ? '' : 'OFF';
+  if (typeof syncCards === 'function') syncCards();
 }
 
 function applyMode() {
@@ -241,7 +242,7 @@ const stageVec = (dx, dy) => {
 function cartSvg(f, total) {
   const n = parseInt(f.col.slice(1), 16), lum = (.299 * (n >> 16) + .587 * ((n >> 8) & 255) + .114 * (n & 255)) / 255;
   const tc = lum > .62 ? '#141414' : '#fff', bw = f.gray === 1;
-  const name = f.n.replace(/\s*\d+$/, '').replace('PLUS', '+').trim();
+  const name = f.n.replace(/\s*E?\d+$/, '').replace('PLUS', '+').trim();
   const nm = name.length > 9 ? name.slice(0, 9) : name;
   const base = bw ? '#4a4a48' : '#8a4a16', hole = '#0b0a08';
   const tints = bw ? ['#d6d6d0', '#b9b9b3', '#e4e4de'] : ['#6e9bc2', f.col, '#b08a5a'];
@@ -282,7 +283,7 @@ ${holes}${frames}
 /* 필름 컷 스트립 창: 스프로킷 구멍이 있는 필름에 컷 4장 */
 function stripSvg(f, total) {
   const bw = f.gray === 1, base = bw ? '#3d3d3b' : '#7a3f12', print = bw ? '#d9d9d3' : '#f0a23a';
-  const name = f.n.replace(/\s*\d+$/, '').replace('PLUS', '+').trim();
+  const name = f.n.replace(/\s*E?\d+$/, '').replace('PLUS', '+').trim();
   const frames = [
     `<rect width="80" height="58" fill="url(#s1)"/><circle cx="40" cy="38" r="12" fill="#fff3c4"/><path d="M0 46 Q20 34 40 44 T80 40 V58 H0Z" fill="#2a1d33"/>`,
     `<rect width="80" height="58" fill="url(#s2)"/><ellipse cx="22" cy="14" rx="14" ry="5" fill="#fff" opacity=".85"/><path d="M0 44 L24 18 L44 40 L58 26 L80 46 V58 H0Z" fill="#4c6a58"/><rect y="48" width="80" height="10" fill="#2f6f8f"/>`,
@@ -328,7 +329,7 @@ function filmRender() {
   const lum = (() => { const n = parseInt(f.col.slice(1), 16); return (.299 * (n >> 16) + .587 * ((n >> 8) & 255) + .114 * (n & 255)) / 255; })();
   $('#mlbl').style.setProperty('--ct', lum > .6 ? '#111' : '#fff');
   $('#mmk').textContent = f.mk; $('#mkind').textContent = kindOf(f);
-  $('#mnm').textContent = f.n.replace(/\s*\d+$/, '') || f.n;
+  $('#mnm').textContent = f.n.replace(/\s*E?\d+$/, '') || f.n;
   $('#miso').textContent = iso;
   $('#mex').textContent = r ? `${r.total} EXP` : '-- EXP';
   { const key = f.id + '|' + (r ? r.total : 24), cs = $('#cart35'); if (cs.dataset.k !== key) { cs.dataset.k = key; cs.innerHTML = cartSvg(f, r ? r.total : 24); $('#strip35').innerHTML = stripSvg(f, r ? r.total : 24); } }
@@ -527,9 +528,52 @@ function processPixels(img, f, ev) {
     }
   }
 }
+/* ═════════ 필름 효과: 날짜 각인 · 빛샘 · 먼지/스크래치 (저장할 때 사진에 합성, 이미 찍은 사진에는 적용 안 됨) ═════════ */
+function applyFx(cv, cx, ts) {
+  const W = cv.width, H = cv.height, S = Math.max(W, H) / 3000, rnd = (a, b) => a + Math.random() * (b - a);
+  const leak = cfg.leak | 0, dust = cfg.dust | 0;
+  if (leak) { // 빛샘: 가장자리에서 번지는 주황·붉은 빛 (screen 합성)
+    cx.save(); cx.globalCompositeOperation = 'screen';
+    const COLS = [[255, 110, 40], [255, 70, 60], [255, 170, 60], [255, 90, 140]];
+    for (let i = 0, n = leak === 2 ? 2 : 1; i < n; i++) {
+      const [r, g, b] = COLS[Math.floor(Math.random() * COLS.length)], a = leak === 2 ? rnd(.55, .85) : rnd(.28, .5);
+      const edge = Math.floor(Math.random() * 4), t = rnd(.1, .9);
+      const x = edge === 0 ? 0 : edge === 1 ? W : t * W, y = edge === 2 ? 0 : edge === 3 ? H : t * H;
+      const rad = Math.max(W, H) * rnd(.28, .55), gr = cx.createRadialGradient(x, y, 0, x, y, rad);
+      gr.addColorStop(0, `rgba(${r},${g},${b},${a})`); gr.addColorStop(.45, `rgba(${r},${g},${b},${a * .38})`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      cx.fillStyle = gr; cx.fillRect(0, 0, W, H);
+    }
+    cx.restore();
+  }
+  if (dust) { // 먼지 알갱이 + 머리카락/세로 스크래치
+    cx.save();
+    for (let i = 0, n = dust === 2 ? 90 : 36; i < n; i++) {
+      const rr = Math.max(.8, rnd(.6, 2.4) * S);
+      cx.globalAlpha = rnd(.25, .7); cx.fillStyle = Math.random() < .7 ? '#fff' : '#000';
+      cx.beginPath(); cx.ellipse(rnd(0, W), rnd(0, H), rr * rnd(.7, 1.5), rr, rnd(0, Math.PI), 0, Math.PI * 2); cx.fill();
+    }
+    cx.strokeStyle = '#fff'; cx.lineCap = 'round';
+    for (let i = 0, n = dust === 2 ? 4 : 2; i < n; i++) {
+      cx.globalAlpha = rnd(.22, .5); cx.lineWidth = Math.max(.8, rnd(.7, 1.6) * S); cx.beginPath();
+      if (Math.random() < .5) { const x = rnd(0, W); cx.moveTo(x, 0); cx.lineTo(x + rnd(-8, 8) * S, H); }
+      else { const x = rnd(.1, .9) * W, y = rnd(.1, .9) * H, l = rnd(40, 110) * S; cx.moveTo(x, y); cx.bezierCurveTo(x + l * .5, y - l * rnd(.2, .8), x + l * rnd(.5, .9), y + l * rnd(.2, .8), x + l, y + rnd(-.3, .3) * l); }
+      cx.stroke();
+    }
+    cx.restore();
+  }
+  if (cfg.stamp) { // 날짜 각인: 데이트백 느낌의 주황 숫자 (우하단)
+    const d = new Date(ts), txt = `'${String(d.getFullYear()).slice(2)} ${d.getMonth() + 1} ${d.getDate()}`, fs = Math.round(Math.max(W, H) * .032);
+    cx.save(); cx.font = `700 ${fs}px "Courier New", ui-monospace, monospace`; cx.textAlign = 'right'; cx.textBaseline = 'alphabetic';
+    const x = W - fs * .9, y = H - fs * .8;
+    cx.shadowColor = 'rgba(255,110,0,.9)'; cx.shadowBlur = fs * .4; cx.fillStyle = '#ff8c1a'; cx.fillText(txt, x, y);
+    cx.shadowBlur = 0; cx.fillStyle = '#ffb347'; cx.globalAlpha = .85; cx.fillText(txt, x, y);
+    cx.restore();
+  }
+}
 async function finishPhoto(img, cv, cx, F, ev, meta) {
   processPixels(img, F, ev);
   cx.putImageData(img, 0, 0);
+  applyFx(cv, cx, meta.ts);
   const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', .93));
   const k = 240 / Math.max(cv.width, cv.height), th = document.createElement('canvas');
   th.width = Math.round(cv.width * k); th.height = Math.round(cv.height * k);
@@ -612,7 +656,8 @@ const thumbBlob = m => m.th || m.blob;
 let thumbUrl;
 async function refreshThumb() {
   const all = (await DB.photos().catch(() => [])).filter(p => !p.roll);
-  const t = $('.thumb');
+  const t = $('.thumb'), rc = $('#rcnt');
+  if (rc) rc.textContent = String(Math.min(all.length, 99)).padStart(2, '0');
   if (thumbUrl) { URL.revokeObjectURL(thumbUrl); thumbUrl = null; }
   if (all.length) { thumbUrl = URL.createObjectURL(thumbBlob(all[all.length - 1])); t.style.background = `url(${thumbUrl}) center/cover`; }
 }
@@ -802,7 +847,7 @@ function showLoad(first) {
   ov.innerHTML = `
     <div class="lh"><b>STILL <i>35</i></b><small>${first ? '처음 오셨네요. 카메라를 고르세요' : '새 필름을 장전하세요'}</small></div>
     <div class="seg" id="lmode"><button data-m="film">필름 카메라<small>필카</small></button><button data-m="digital">디지털<small>디카</small></button></div>
-    <div class="lcards" id="lcards">${FILMS.map((f, i) => `<div class="lc" data-i="${i}"><div class="box" style="--c:${f.col}"><small>${f.mk}</small><b>${f.n}</b><em>ISO ${f.iso}</em></div><p>${f.d}</p></div>`).join('')}</div>
+    <div class="lcards" id="lcards">${FILMS.map((f, i) => `<div class="lc" data-i="${i}"><div class="box" style="--c:${f.col}"><img src="${new URL('films/' + f.id + '.jpg', SRC).href}" alt="${f.mk} ${f.n}" onerror="this.remove()"><small>${f.mk}</small><b>${f.n}</b><em>ISO ${f.iso}</em></div><p>${f.d}</p></div>`).join('')}</div>
     <div class="lcnt" id="lskin"><small>카메라 스킨</small><div class="skg">${SKINS.map(k => `<button data-s="${k.id}">${k.n}</button>`).join('')}</div></div>
     <div class="lcnt" id="lcnt"><small>필름 컷 수</small><div class="seg s3">${[12, 24, 36].map(n => `<button data-n="${n}">${n}</button>`).join('')}</div></div>
     <p class="lnote" id="lnote"></p>
@@ -845,19 +890,24 @@ function openSettings() {
   const ov = document.createElement('div'); ov.className = 'mdl docked';
   /* 스킨 방향(회전)과 같은 방향으로 시트를 돌려서, 카메라 스킨의 '아래쪽'에 붙도록 한다 */
   const place = () => {
-    const rot = stageRot(), vw = innerWidth, vh = innerHeight;
+    const rot = isFilm() ? stageRot() : 0, vw = innerWidth, vh = innerHeight;
     if (Math.abs(rot) === 90) Object.assign(ov.style, { left: '50%', top: '50%', right: 'auto', bottom: 'auto', width: vh + 'px', height: vw + 'px', transform: `translate(-50%,-50%) rotate(${rot}deg)` });
     else Object.assign(ov.style, { left: '0', top: '0', right: '0', bottom: '0', width: '', height: '', transform: '' });
   };
+  const LV = ['끔', '약', '강'];
   const row = (label, inner) => `<div class="srow"><span>${label}</span><div class="seg s3">${inner}</div></div>`;
   let sc = 0;
   const draw = () => {
     const old = ov.querySelector('.skstrip'); if (old) sc = old.scrollTop;
     const skinRow = APP === 'film' ? `<div class="skstrip">${SKINS.map((k, i) => `<button data-k="skin" data-v="${k.id}" class="sk ${cfg.skin === k.id ? 'on' : ''}"><img src="${new URL('skins/' + SKIN_THUMB[k.id], SRC).href}" alt=""><b>${i + 1}</b><span>${k.n}</span></button>`).join('')}</div>` : '';
     ov.innerHTML = `<div class="mbox sset dock"><div class="dh"><b>카메라 설정</b><button id="sdone" class="ghost">닫기</button></div>${skinRow}
-      <div class="rows">${row('쥐는 손', `<button data-k="rot" data-v="left" class="${cfg.rot === 'left' ? 'on' : ''}">오른손</button><button data-k="rot" data-v="right" class="${cfg.rot === 'right' ? 'on' : ''}">왼손</button>`)}
+      <div class="rows">${isFilm() ? row('쥐는 손', `<button data-k="rot" data-v="left" class="${cfg.rot === 'left' ? 'on' : ''}">오른손</button><button data-k="rot" data-v="right" class="${cfg.rot === 'right' ? 'on' : ''}">왼손</button>`) : ''}
       ${row('소리', `<button data-k="sound" data-v="1" class="${cfg.sound ? 'on' : ''}">켜짐</button><button data-k="sound" data-v="0" class="${!cfg.sound ? 'on' : ''}">꺼짐</button>`)}
-      ${row('현상 대기', DEV_OPTS.map(o => `<button data-k="dev" data-v="${o.ms}" class="${cfg.dev === o.ms ? 'on' : ''}">${o.l}</button>`).join(''))}</div></div>`;
+      ${isFilm() ? row('현상 대기', DEV_OPTS.map(o => `<button data-k="dev" data-v="${o.ms}" class="${cfg.dev === o.ms ? 'on' : ''}">${o.l}</button>`).join('')) : ''}
+      ${row('날짜 각인', `<button data-k="stamp" data-v="0" class="${!cfg.stamp ? 'on' : ''}">끔</button><button data-k="stamp" data-v="1" class="${cfg.stamp ? 'on' : ''}">켜짐</button>`)}
+      ${row('빛샘', LV.map((l, i) => `<button data-k="leak" data-v="${i}" class="${(cfg.leak | 0) === i ? 'on' : ''}">${l}</button>`).join(''))}
+      ${row('먼지·스크래치', LV.map((l, i) => `<button data-k="dust" data-v="${i}" class="${(cfg.dust | 0) === i ? 'on' : ''}">${l}</button>`).join(''))}</div>
+      <p class="fxnote">날짜·빛샘·먼지는 앞으로 찍는 사진부터 적용돼요<br>빌드 ${BUILD}</p></div>`;
     const st = ov.querySelector('.skstrip'); if (st) { st.scrollTop = sc; if (!sc) { const on = st.querySelector('.on'); if (on) st.scrollTop = on.offsetTop - 12; } }
   };
   place(); draw(); app.appendChild(ov);
@@ -868,9 +918,60 @@ function openSettings() {
     if (k === 'skin') { cfg.skin = v; filmRender(); layoutFilm(); }
     if (k === 'rot') { cfg.rot = v; layoutFilm(); place(); }
     if (k === 'sound') cfg.sound = v === '1'; if (k === 'dev') cfg.dev = +v;
+    if (k === 'stamp') cfg.stamp = v === '1'; if (k === 'leak') cfg.leak = +v; if (k === 'dust') cfg.dust = +v;
     save(); draw();
   });
 }
+
+
+/* ═════════ 디카: 샘플 앱풍 CAMERA / LENS / FILM 카드 + 선택 시트 ═════════ */
+const CAMS = [{ n: 'Standard', s: '3:2 · 기본', r: 0 }, { n: 'Half Frame', s: '4:3 · 세로 3:4', r: 1 }, { n: 'Square', s: '1:1 · 정사각', r: 2 }, { n: 'Cinema', s: '16:9 · 길쭉', r: 3 }];
+const LENSES = [{ n: '26mm f1.8', s: '기본 화각', z: 1 }, { n: '35mm f2', s: '약간 좁게', z: 1.35 }, { n: '50mm f2', s: '표준 화각', z: 1.9 }, { n: '85mm f2.8', s: '인물용 망원', z: 3.2 }];
+const ICO = {
+  camera: '<svg viewBox="0 0 48 36"><rect x="4" y="9" width="40" height="23" rx="3"/><path d="M16 9l2-4h12l2 4"/><circle cx="24" cy="21" r="7"/><circle cx="24" cy="21" r="3"/><circle cx="38" cy="14" r="1.2"/></svg>',
+  lens: '<svg viewBox="0 0 48 36"><circle cx="24" cy="18" r="14"/><circle cx="24" cy="18" r="9"/><circle cx="24" cy="18" r="4"/><path d="M6 18h4M38 18h4"/></svg>',
+};
+const filmImg = f => new URL('films/' + f.id + '.jpg', SRC).href;
+const nearLens = z => LENSES.reduce((b, l) => Math.abs(l.z - z) < Math.abs(b.z - z) ? l : b);
+function syncCards() {
+  const box = $('#cards'); if (!box) return;
+  const cam = CAMS[Math.min(st.ratio, CAMS.length - 1)], lens = nearLens(st.zoom), f = FILMS[st.f];
+  const set = (k, t, ico) => { const c = box.querySelector(`[data-pick=${k}]`); c.querySelector('b').textContent = t; c.querySelector('i').innerHTML = ico; };
+  set('camera', cam.n, ICO.camera); set('lens', lens.n, ICO.lens);
+  set('film', f.n, `<img src="${filmImg(f)}" alt="" onerror="this.remove()">`);
+}
+function openPicker(kind) {
+  let items, cur, title;
+  if (kind === 'camera') { title = 'CAMERA'; cur = st.ratio; items = CAMS.map(c => ({ k: c.r, t: c.n, s: c.s, ico: ICO.camera })); }
+  else if (kind === 'lens') { title = 'LENS'; cur = LENSES.indexOf(nearLens(st.zoom)); items = LENSES.map((l, i) => ({ k: i, t: l.n, s: l.s, ico: ICO.lens })); }
+  else { title = 'FILM'; cur = st.f; items = FILMS.map((f, i) => ({ k: i, t: f.n, s: f.mk + ' · ISO ' + f.iso, img: filmImg(f) })); }
+  $('#pickt').textContent = title;
+  $('#pickg').innerHTML = items.map(it => `<button class="po ${it.k === cur ? 'on' : ''}" data-k="${it.k}">${it.img ? `<img src="${it.img}" alt="">` : `<span class="pi">${it.ico}</span>`}<b>${it.t}</b><small>${it.s}</small></button>`).join('');
+  $('#pickov').dataset.kind = kind; $('#pickov').classList.add('on');
+}
+if ($('#cards')) {
+  $('#cards').addEventListener('click', e => { const c = e.target.closest('[data-pick]'); if (c) openPicker(c.dataset.pick); });
+  $('#pickov').addEventListener('click', e => {
+    const ov = $('#pickov');
+    if (e.target === ov || e.target.id === 'pickx') { ov.classList.remove('on'); return; }
+    const b = e.target.closest('.po'); if (!b) return;
+    const k = +b.dataset.k, kind = ov.dataset.kind;
+    if (kind === 'camera') st.ratio = k; else if (kind === 'lens') st.zoom = LENSES[k].z; else st.f = k;
+    render(); ov.classList.remove('on');
+  });
+}
+
+
+/* 백그라운드에 오래 떠 있던 홈 화면 앱이 옛 코드를 계속 쓰지 않도록: 앱으로 돌아올 때마다 서버의 BUILD 를 확인해 다르면 새로고침 */
+async function checkUpdate() {
+  try {
+    const t = await (await fetch(SRC.split('?')[0] + '?chk=' + Date.now(), { cache: 'no-store' })).text();
+    const m = t.match(/const BUILD = '([^']+)'/);
+    if (m && m[1] !== BUILD && !pending) location.reload();
+  } catch {}
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); });
+checkUpdate();
 
 /* ═════════ 입력 연결 ═════════ */
 const fbar = $('.filters');
@@ -889,6 +990,7 @@ ics[1].addEventListener('click', async () => {
   st.torch = !st.torch; await tr.applyConstraints({ advanced: [{ torch: st.torch }] }).catch(() => {}); render();
 });
 ics[2].addEventListener('click', () => { st.timer = st.timer === 0 ? 3 : st.timer === 3 ? 10 : 0; render(); });
+if (ics[3]) ics[3].addEventListener('click', openSettings); // 디카 버전: 상단 설정 아이콘
 const flip = () => { st.facing = st.facing === 'environment' ? 'user' : 'environment'; startCam(); };
 $('.flip').addEventListener('click', flip);
 $('#shutter').addEventListener('click', shoot); $('#fshut').addEventListener('click', shoot);

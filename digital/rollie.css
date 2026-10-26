@@ -1,0 +1,68 @@
+/* 디카 버전 스킨 — 샘플 앱(Rollies)풍 디자인 차용: 어두운 바디 · 프레임 카운터 · 둥근 뷰파인더 · CAMERA/LENS/FILM 카드 · 흰 셔터
+   body.rollie 일 때만 적용, 세로 화면 전용(가로 모드는 기존 레이아웃 유지). 되돌리려면 <body> 의 rollie 클래스만 빼면 됨 */
+.cnt2,.prism,.cards,.pickov{display:none}
+
+@media (orientation:portrait),(min-height:601px){
+  body.rollie{background:#0a0a09}
+  body.rollie .app{background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.035) 0 1px,transparent 1.5px) 0 0/4px 4px,linear-gradient(#141413,#0a0a09)}
+  body.rollie .app .status{display:none}
+
+  /* 상단 바디: 프레임 카운터 · 보조 버튼 · 프리즘 · 플래시 레버 */
+  body.rollie .app .top{flex:0 0 auto;height:auto;gap:9px;justify-content:flex-start;padding:calc(env(safe-area-inset-top,0px) + 12px) 14px 10px}
+  body.rollie .app .top .dot,body.rollie .app .top .ratio{display:none}
+  body.rollie .cnt2{display:grid;place-items:center;order:1;min-width:62px;height:40px;padding:0 8px;border-radius:6px;background:#d8c79b;box-shadow:inset 0 2px 5px rgba(0,0,0,.45),0 0 0 2px #1c1b19,0 0 0 3px #3a3732}
+  body.rollie .cnt2 b{font:800 22px var(--mono);letter-spacing:.05em;color:#2b2214}
+  body.rollie .app .top .ic{width:32px;height:32px;border-radius:50%;color:#bdb7a8;background:#171614;box-shadow:inset 0 0 0 1px #34312c;order:3}
+  body.rollie .app .top .ic.g{order:2}
+  body.rollie .app .top .ic.st{order:3}
+  body.rollie .app .top .ic.tm{order:4}
+  body.rollie .app .top svg{width:17px;height:17px;stroke-width:1.5}
+  body.rollie .prism{display:flex;order:5;flex:1;justify-content:center}
+  body.rollie .prism i{display:block;width:70px;height:34px;border-radius:7px 7px 3px 3px;background:linear-gradient(#232220,#0e0e0d);box-shadow:inset 0 1px 0 #3d3a35,0 0 0 1px #050505;position:relative}
+  body.rollie .prism i::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3b3d44,#08090b 70%);box-shadow:0 0 0 2px #1a1917}
+  /* 플래시(토치) = 오른쪽 레버 */
+  body.rollie .app .top .ic.tl{order:6;width:58px;height:26px;border-radius:13px;background:linear-gradient(#2a2926,#121211);box-shadow:inset 0 1px 0 #46433d,0 0 0 1px #050505;color:#d8d4c7}
+  body.rollie .app .top .ic.tl svg{width:15px;height:15px}
+  body.rollie .app .top .ic[data-v="ON"]{color:#ffd23f;box-shadow:inset 0 1px 0 #46433d,0 0 0 1px #050505,0 0 10px rgba(255,210,63,.5)}
+
+  /* 뷰파인더: 둥근 어두운 프레임, 남는 높이를 모두 차지 */
+  body.rollie .app .vf{flex:1 1 auto;width:auto;height:auto;min-height:0;margin:0 14px 10px;border-radius:16px;box-shadow:0 0 0 3px #050505,0 0 0 4px #34312c}
+  body.rollie .app .frame{left:14px;right:14px;top:14px;bottom:14px}
+  body.rollie .app .frame i{width:20px;height:20px;border-color:rgba(255,255,255,.85)}
+  body.rollie .app .readout,body.rollie .app .zoom,body.rollie .app .filters,body.rollie .app .lvl,body.rollie .app .fmark{display:none}
+
+  /* 하단: CAMERA / LENS / FILM 카드 → 노출 다이얼 → 갤러리·셔터·전후면 */
+  body.rollie .app .bottom{flex:0 0 auto;height:auto;justify-content:flex-start;padding:0 14px calc(env(safe-area-inset-bottom,0px) + 12px);background:none}
+  body.rollie .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+  body.rollie .card{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px 7px;border-radius:12px;background:#151514;border:1px solid #2b2925;color:inherit;font:inherit;cursor:pointer;min-width:0}
+  body.rollie .card:active{background:#1d1c1a}
+  body.rollie .card small{font:700 8.5px var(--mono);letter-spacing:.22em;color:#7c776d}
+  body.rollie .card b{font:700 11px var(--mono);color:#e0a458;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+  body.rollie .card i{display:grid;place-items:center;width:100%;height:42px;color:#d9d5c8}
+  body.rollie .card i svg{width:46px;height:34px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  body.rollie .card i img{height:40px;max-width:92%;object-fit:contain;border-radius:4px;background:#f1eee6}
+  body.rollie .app .dial{height:22px;margin:18px 8px 12px}
+  body.rollie .app .dial .lab{top:-12px;font-size:9px}
+  body.rollie .app .dial .ticks{top:8px;height:9px}
+  body.rollie .app .row{padding:0 8px}
+  body.rollie .app .shutter{width:78px;height:78px;padding:6px;background:#f3f1eb;box-shadow:0 0 0 3px #0a0a09,0 0 0 5px #cfcabd}
+  body.rollie .app .shutter b{background:#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),inset 0 -4px 8px rgba(0,0,0,.08)}
+  body.rollie .app .shutter b::after{display:none}
+  body.rollie .app .thumb{width:48px;height:48px;border-radius:12px;box-shadow:0 0 0 2px #0a0a09,0 0 0 3px #3a3732}
+  body.rollie .app .flip{width:48px;height:48px;border-radius:50%;color:#bdb7a8;background:#171614;box-shadow:inset 0 0 0 1px #34312c}
+
+  /* 선택 시트 */
+  body.rollie .pickov{position:absolute;inset:0;z-index:30;background:rgba(0,0,0,.62);align-items:flex-end}
+  body.rollie .pickov.on{display:flex}
+  body.rollie .pbox{width:100%;max-height:72%;overflow:auto;background:#141413;border-radius:18px 18px 0 0;border-top:1px solid #34312c;padding:14px 14px calc(env(safe-area-inset-bottom,0px) + 16px)}
+  body.rollie .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font:700 11px var(--mono);letter-spacing:.24em;color:#9b968b}
+  body.rollie .ph button{font:600 11px var(--mono);letter-spacing:.1em;padding:6px 14px;border-radius:14px;border:1px solid #4a4741;background:#1b1a18;color:var(--ink)}
+  body.rollie .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  body.rollie .po{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 5px 8px;text-align:center;border-radius:12px;background:#1b1a18;border:1px solid #2c2a26;color:inherit;font:inherit;cursor:pointer}
+  body.rollie .po.on{border-color:#e0a458;box-shadow:0 0 0 1px #e0a458}
+  body.rollie .po img{width:100%;height:60px;object-fit:contain;border-radius:8px;background:#f1eee6}
+  body.rollie .po .pi{display:grid;place-items:center;width:100%;height:60px;color:#e8e2cf}
+  body.rollie .po .pi svg{width:50px;height:38px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  body.rollie .po b{font:700 11px var(--mono);color:#f2efe8}
+  body.rollie .po small{font:500 9px var(--mono);color:#8d887d;line-height:1.35}
+}
