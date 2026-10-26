@@ -1,27 +1,25 @@
 /* 디카 버전 스킨 — 샘플 앱(Rollies)풍 디자인 차용: 어두운 바디 · 프레임 카운터 · 둥근 뷰파인더 · CAMERA/LENS/FILM 카드 · 흰 셔터
    body.rollie 일 때만 적용, 세로 화면 전용(가로 모드는 기존 레이아웃 유지). 되돌리려면 <body> 의 rollie 클래스만 빼면 됨 */
-.cnt2,.prism,.cards,.pickov{display:none}
+.prism,.cards,.pickov{display:none}
 
 @media (orientation:portrait),(min-height:601px){
   body.rollie{background:#0a0a09}
   body.rollie .app{background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.035) 0 1px,transparent 1.5px) 0 0/4px 4px,linear-gradient(#141413,#0a0a09)}
   body.rollie .app .status{display:none}
 
-  /* 상단 바디: 프레임 카운터 · 보조 버튼 · 프리즘 · 플래시 레버 */
-  body.rollie .app .top{flex:0 0 auto;height:auto;gap:9px;justify-content:flex-start;padding:calc(env(safe-area-inset-top,0px) + 12px) 14px 10px}
+  /* 상단 바디: 보조 버튼 · 프리즘(가운데) · 플래시 레버 */
+  body.rollie .app .top{position:relative;flex:0 0 auto;height:auto;gap:9px;justify-content:flex-start;padding:calc(env(safe-area-inset-top,0px) + 12px) 14px 10px}
   body.rollie .app .top .dot,body.rollie .app .top .ratio{display:none}
-  body.rollie .cnt2{display:grid;place-items:center;order:1;min-width:62px;height:40px;padding:0 8px;border-radius:6px;background:#d8c79b;box-shadow:inset 0 2px 5px rgba(0,0,0,.45),0 0 0 2px #1c1b19,0 0 0 3px #3a3732}
-  body.rollie .cnt2 b{font:800 22px var(--mono);letter-spacing:.05em;color:#2b2214}
   body.rollie .app .top .ic{width:32px;height:32px;border-radius:50%;color:#bdb7a8;background:#171614;box-shadow:inset 0 0 0 1px #34312c;order:3}
   body.rollie .app .top .ic.g{order:2}
   body.rollie .app .top .ic.st{order:3}
   body.rollie .app .top .ic.tm{order:4}
   body.rollie .app .top svg{width:17px;height:17px;stroke-width:1.5}
-  body.rollie .prism{display:flex;order:5;flex:1;justify-content:center}
-  body.rollie .prism i{display:block;width:70px;height:34px;border-radius:7px 7px 3px 3px;background:linear-gradient(#232220,#0e0e0d);box-shadow:inset 0 1px 0 #3d3a35,0 0 0 1px #050505;position:relative}
+  body.rollie .prism{display:flex;position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 12px);height:32px;margin-left:-35px;align-items:center}
+  body.rollie .prism i{display:block;width:70px;height:32px;border-radius:7px 7px 3px 3px;background:linear-gradient(#232220,#0e0e0d);box-shadow:inset 0 1px 0 #3d3a35,0 0 0 1px #050505;position:relative}
   body.rollie .prism i::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3b3d44,#08090b 70%);box-shadow:0 0 0 2px #1a1917}
   /* 플래시(토치) = 오른쪽 레버 */
-  body.rollie .app .top .ic.tl{order:6;width:58px;height:26px;border-radius:13px;background:linear-gradient(#2a2926,#121211);box-shadow:inset 0 1px 0 #46433d,0 0 0 1px #050505;color:#d8d4c7}
+  body.rollie .app .top .ic.tl{order:6;margin-left:auto;width:58px;height:26px;border-radius:13px;background:linear-gradient(#2a2926,#121211);box-shadow:inset 0 1px 0 #46433d,0 0 0 1px #050505;color:#d8d4c7}
   body.rollie .app .top .ic.tl svg{width:15px;height:15px}
   body.rollie .app .top .ic[data-v="ON"]{color:#ffd23f;box-shadow:inset 0 1px 0 #46433d,0 0 0 1px #050505,0 0 10px rgba(255,210,63,.5)}
 

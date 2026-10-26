@@ -6,7 +6,7 @@ const app = $('.app'), vf = $('.vf'), scene = $('#scene'), grainEl = $('#grain')
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const DIAG = location.search.includes('diag');
 /* 필카 앱 / 디카 앱 분리: 페이지가 window.STILL_APP 으로 지정 */
-const BUILD = '20261026d';
+const BUILD = '20261026e';
 const APP = window.STILL_APP === 'digital' ? 'digital' : 'film';
 const SRC = (document.currentScript && document.currentScript.src) || location.href;
 
@@ -455,16 +455,28 @@ bsecEl.addEventListener('click', () => { cfg.menuSeen = true; save(); bsecEl.cla
 
 
 /* ═════════ 카메라 ═════════ */
+let camSeq = 0;
+const camConstraints = big => ({ video: big ? { facingMode: { ideal: st.facing }, width: { ideal: 4032 }, height: { ideal: 3024 } } : { facingMode: { ideal: st.facing } }, audio: false });
+async function attachCam(s) { stream = s; video.srcObject = s; video.style.display = 'block'; scene.style.display = 'none'; await video.play().catch(() => {}); }
 async function startCam() {
+  const my = ++camSeq; // 연속 호출되면 마지막 호출만 유효
   stopCam(); msgEl.classList.remove('on');
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     showMsg('카메라를 쓰려면 https 주소로 열어야 해요.\n지금은 샘플 화면만 보여요.'); return;
   }
   try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: { ideal: st.facing }, width: { ideal: 4032 }, height: { ideal: 3024 } }, audio: false });
-    video.srcObject = stream; video.style.display = 'block'; scene.style.display = 'none';
-    await video.play().catch(() => {});
+    let s = await navigator.mediaDevices.getUserMedia(camConstraints(true));
+    if (my !== camSeq) { s.getTracks().forEach(t => t.stop()); return; }
+    await attachCam(s);
+    // 아이폰에서 카메라를 껐다 켰을 때 화면이 검게 멈추는 경우가 있어, 첫 화면이 안 나오면 단순한 조건으로 한 번 더 켠다
+    await sleep(1000);
+    if (my === camSeq && (!video.videoWidth || video.readyState < 2)) {
+      stopCam(); await sleep(350);
+      if (my !== camSeq) return;
+      s = await navigator.mediaDevices.getUserMedia(camConstraints(false));
+      if (my !== camSeq) { s.getTracks().forEach(t => t.stop()); return; }
+      await attachCam(s);
+    }
     st.torch = false; render();
     if (DIAG) {
       const tr = stream.getVideoTracks()[0];
@@ -478,7 +490,7 @@ async function startCam() {
       : '카메라를 켤 수 없어요. (' + (e && e.name) + ')', true);
   }
 }
-function stopCam() { if (stream) stream.getTracks().forEach(t => t.stop()); stream = null; }
+function stopCam() { if (stream) stream.getTracks().forEach(t => t.stop()); stream = null; video.srcObject = null; }
 function showMsg(t, retry, closable) {
   msgEl.innerHTML = `<p>${t.startsWith('<') ? t : t.replace(/\n/g, '<br>')}</p>` + (retry ? '<button id="retry">다시 시도</button>' : '') + (closable ? '<button id="mclose">닫기</button>' : '');
   msgEl.classList.add('on');
@@ -656,8 +668,7 @@ const thumbBlob = m => m.th || m.blob;
 let thumbUrl;
 async function refreshThumb() {
   const all = (await DB.photos().catch(() => [])).filter(p => !p.roll);
-  const t = $('.thumb'), rc = $('#rcnt');
-  if (rc) rc.textContent = String(Math.min(all.length, 99)).padStart(2, '0');
+  const t = $('.thumb');
   if (thumbUrl) { URL.revokeObjectURL(thumbUrl); thumbUrl = null; }
   if (all.length) { thumbUrl = URL.createObjectURL(thumbBlob(all[all.length - 1])); t.style.background = `url(${thumbUrl}) center/cover`; }
 }
@@ -749,17 +760,18 @@ async function openGrid({ title, fetch, sub }) {
 
 /* 디카 모드 보관함: 썸네일 → 최신 사진에서 바로 좌우로 넘기기, 격자 버튼으로 선택 저장 */
 async function openDigitalLibrary() {
-  stopCam();
+  // 카메라는 끄지 않고 위에 보관함만 덮는다 — 아이폰에서 카메라를 껐다 켜면 화면이 검게 멈추는 문제 방지
   const fetch = async () => (await DB.photos()).filter(p => !p.roll).sort((a, b) => a.ts - b.ts);
   const list = await fetch();
-  const done = () => { refreshThumb(); startCam(); };
-  if (!list.length) { toast('아직 사진이 없어요'); startCam(); return; }
+  const done = () => { refreshThumb(); if (stream && video.srcObject) video.play().catch(() => {}); else startCam(); };
+  if (!list.length) { toast('아직 사진이 없어요'); return; }
   const ov = document.createElement('div'); ov.className = 'backbar';
   ov.innerHTML = '<button id="lgrid">▦ 전체 · 선택 저장</button><button id="lback">◂ 카메라로</button>';
   app.appendChild(ov);
   $('#lback').onclick = () => { ov.remove(); $$('.viewer,.pg').forEach(x => x.remove()); done(); };
   $('#lgrid').onclick = () => openGrid({ title: '보관함', fetch, sub: '디지털' });
-  openViewer(list.slice(), list.length - 1, async () => { if (!(await fetch()).length) { ov.remove(); done(); } });
+  // 사진 보기의 '닫기'(또는 마지막 사진 삭제) = 카메라로 완전히 복귀 (보관함 막대·격자까지 정리)
+  openViewer(list.slice(), list.length - 1, () => { ov.remove(); $$('.viewer,.pg').forEach(x => x.remove()); done(); });
 }
 
 /* ═════════ 앨범 (현상된 롤) ═════════ */
